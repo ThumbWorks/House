@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         cameraSphereNode.position = node.boundingSphere.center
         sphere.radius = CGFloat(radius)
-        boxNode.position.x = radius
+        boxNode.position.y = radius
         SCNTransaction.commit()
     }
 
@@ -69,16 +69,19 @@ class ViewController: UIViewController {
         
         // set up our camera mounting sphere
         boxNode.geometry = SCNBox(width: 60, height: 60, length: 60, chamferRadius: 4.0)
+        let green = SCNMaterial()
+        green.diffuse.contents = UIColor.green
+        let red = SCNMaterial()
+        red.diffuse.contents = UIColor.red
+        boxNode.geometry?.materials = [green, green, green, green, green, red]
         
         let material = SCNMaterial()
-        let samImageName = "/Users/roderic/Desktop/SamIcon/Icon-98.png"
-        material.diffuse.contents = UIImage(contentsOfFile: samImageName)
-        material.transparency = 0.5
+        material.diffuse.contents = UIColor.blue
+        material.transparency = 0.3
         sphere.materials = [material]
         
         cameraSphereNode.geometry = sphere
-        
-        boxNode.position = SCNVector3Make(Float(sphere.radius), 0, 30)
+        boxNode.position = SCNVector3Make(0, Float(sphere.radius), 30)
         cameraSphereNode.addChildNode(boxNode)
 
         // set up the SCNCamera
@@ -99,7 +102,6 @@ class ViewController: UIViewController {
         // add the node to the scene (may be redundant after multiple viewDidAppear calls)
         sceneView.scene?.rootNode.addChildNode(cameraNode)
         sceneView.pointOfView = cameraNode
-
     }
 }
 
@@ -122,6 +124,10 @@ extension ViewController {
         case .changed:
             cameraSphereNode.eulerAngles.z = newAngleX
             boxNode.position.z = originalZHeight + newAngleY
+            boxNode.rotation =
+                SCNVector4Make(1, 0, 0, // rotate around X
+                    atan2f(boxNode.position.z, boxNode.position.y)); // -atan(camY/camZ)
+
         default:
             print("something else")
         }
@@ -148,7 +154,7 @@ extension ViewController {
                     if isMaterialInSet(geometry, materialNames: ["material_5"]) {
                         // now move our camerasphere to the door
                         print("Found the door through it's material")
-                        moveSphereTo(node, radius:node.boundingSphere.radius * 3)
+                        moveSphereTo(node, radius:node.boundingSphere.radius * 2)
                     }
                 }
             }
