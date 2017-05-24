@@ -7,20 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F0503EB1EC57534003CD0E8 /* walking3.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EA1EC57534003CD0E8 /* walking3.dae */; };
+		5F0503ED1EC57D14003CD0E8 /* ColladaRig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0503EC1EC57D14003CD0E8 /* ColladaRig.swift */; };
+		5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EE1EC580DA003CD0E8 /* walking.dae */; };
+		5F24C44A1EC56C8200A97F01 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F24C4491EC56C8200A97F01 /* art.scnassets */; };
 		5F39667F1EB024BC003A0A8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F39667E1EB024BC003A0A8E /* AppDelegate.swift */; };
 		5F3966811EB024BD003A0A8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3966801EB024BD003A0A8E /* ViewController.swift */; };
 		5F3966841EB024BD003A0A8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966821EB024BD003A0A8E /* Main.storyboard */; };
 		5F3966861EB024BD003A0A8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966851EB024BD003A0A8E /* Assets.xcassets */; };
 		5F3966891EB024BD003A0A8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966871EB024BD003A0A8E /* LaunchScreen.storyboard */; };
-		5F3966931EB02576003A0A8E /* Arbutus.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966921EB02576003A0A8E /* Arbutus.dae */; };
+		5F5C29B11ECE00660046D41F /* HomeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C29B01ECE00660046D41F /* HomeDelegate.swift */; };
+		5F5C29B31ECE008D0046D41F /* HomeManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */; };
 		5F7839161EB41AB1002410EB /* HomeKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7839151EB41AB1002410EB /* HomeKitViewController.swift */; };
-		5F78391A1EB45A36002410EB /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7839191EB45A36002410EB /* HomeKit.framework */; };
-		5FB979121EBCE3E500071E07 /* CameraPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB979111EBCE3E500071E07 /* CameraPreviewCell.swift */; };
-		5FB979141EBD4C5900071E07 /* SceneCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB979131EBD4C5900071E07 /* SceneCollectionViewController.swift */; };
-		5FB979161EBD4EC800071E07 /* SavedCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB979151EBD4EC800071E07 /* SavedCamera.swift */; };
+		5FEEF3351EC65A5500664803 /* Logan.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEF3341EC65A5500664803 /* Logan.dae */; };
+		5FEEF3371EC65B0E00664803 /* Logan-Run.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEF3361EC65B0E00664803 /* Logan-Run.dae */; };
+		5FF978971ED3F40000AC0733 /* Arbutus.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FF978961ED3F40000AC0733 /* Arbutus.dae */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F0503EA1EC57534003CD0E8 /* walking3.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking3.dae; sourceTree = "<group>"; };
+		5F0503EC1EC57D14003CD0E8 /* ColladaRig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColladaRig.swift; sourceTree = "<group>"; };
+		5F0503EE1EC580DA003CD0E8 /* walking.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking.dae; sourceTree = "<group>"; };
+		5F24C4491EC56C8200A97F01 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		5F39667B1EB024BC003A0A8E /* MyHouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F39667E1EB024BC003A0A8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F3966801EB024BD003A0A8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,13 +36,13 @@
 		5F3966851EB024BD003A0A8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F3966881EB024BD003A0A8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F39668A1EB024BD003A0A8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5F3966921EB02576003A0A8E /* Arbutus.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Arbutus.dae; sourceTree = "<group>"; };
+		5F5C29B01ECE00660046D41F /* HomeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDelegate.swift; sourceTree = "<group>"; };
+		5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeManagerDelegate.swift; sourceTree = "<group>"; };
 		5F7839151EB41AB1002410EB /* HomeKitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitViewController.swift; sourceTree = "<group>"; };
 		5F7839171EB45A36002410EB /* MyHouse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyHouse.entitlements; sourceTree = "<group>"; };
-		5F7839191EB45A36002410EB /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
-		5FB979111EBCE3E500071E07 /* CameraPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewCell.swift; sourceTree = "<group>"; };
-		5FB979131EBD4C5900071E07 /* SceneCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCollectionViewController.swift; sourceTree = "<group>"; };
-		5FB979151EBD4EC800071E07 /* SavedCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedCamera.swift; sourceTree = "<group>"; };
+		5FEEF3341EC65A5500664803 /* Logan.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Logan.dae; sourceTree = "<group>"; };
+		5FEEF3361EC65B0E00664803 /* Logan-Run.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "Logan-Run.dae"; sourceTree = "<group>"; };
+		5FF978961ED3F40000AC0733 /* Arbutus.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Arbutus.dae; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +50,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F78391A1EB45A36002410EB /* HomeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,26 +76,38 @@
 		5F39667D1EB024BC003A0A8E /* MyHouse */ = {
 			isa = PBXGroup;
 			children = (
+				5F5C29AF1ECE003B0046D41F /* HomeKitManagers */,
 				5F7839171EB45A36002410EB /* MyHouse.entitlements */,
 				5F39667E1EB024BC003A0A8E /* AppDelegate.swift */,
 				5F3966801EB024BD003A0A8E /* ViewController.swift */,
 				5F3966821EB024BD003A0A8E /* Main.storyboard */,
+				5FF978961ED3F40000AC0733 /* Arbutus.dae */,
+				5F0503EE1EC580DA003CD0E8 /* walking.dae */,
+				5F0503EA1EC57534003CD0E8 /* walking3.dae */,
+				5FEEF3341EC65A5500664803 /* Logan.dae */,
+				5FEEF3361EC65B0E00664803 /* Logan-Run.dae */,
+				5F24C4491EC56C8200A97F01 /* art.scnassets */,
 				5F3966851EB024BD003A0A8E /* Assets.xcassets */,
-				5F3966921EB02576003A0A8E /* Arbutus.dae */,
 				5F3966871EB024BD003A0A8E /* LaunchScreen.storyboard */,
 				5F39668A1EB024BD003A0A8E /* Info.plist */,
 				5F7839151EB41AB1002410EB /* HomeKitViewController.swift */,
-				5FB979111EBCE3E500071E07 /* CameraPreviewCell.swift */,
-				5FB979131EBD4C5900071E07 /* SceneCollectionViewController.swift */,
-				5FB979151EBD4EC800071E07 /* SavedCamera.swift */,
+				5F0503EC1EC57D14003CD0E8 /* ColladaRig.swift */,
 			);
 			path = MyHouse;
+			sourceTree = "<group>";
+		};
+		5F5C29AF1ECE003B0046D41F /* HomeKitManagers */ = {
+			isa = PBXGroup;
+			children = (
+				5F5C29B01ECE00660046D41F /* HomeDelegate.swift */,
+				5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */,
+			);
+			name = HomeKitManagers;
 			sourceTree = "<group>";
 		};
 		5F7839181EB45A36002410EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5F7839191EB45A36002410EB /* HomeKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -129,7 +148,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HomeKit = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -159,9 +178,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F3966891EB024BD003A0A8E /* LaunchScreen.storyboard in Resources */,
+				5F24C44A1EC56C8200A97F01 /* art.scnassets in Resources */,
+				5FF978971ED3F40000AC0733 /* Arbutus.dae in Resources */,
+				5FEEF3351EC65A5500664803 /* Logan.dae in Resources */,
 				5F3966861EB024BD003A0A8E /* Assets.xcassets in Resources */,
 				5F3966841EB024BD003A0A8E /* Main.storyboard in Resources */,
-				5F3966931EB02576003A0A8E /* Arbutus.dae in Resources */,
+				5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */,
+				5F0503EB1EC57534003CD0E8 /* walking3.dae in Resources */,
+				5FEEF3371EC65B0E00664803 /* Logan-Run.dae in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,11 +197,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F3966811EB024BD003A0A8E /* ViewController.swift in Sources */,
-				5FB979121EBCE3E500071E07 /* CameraPreviewCell.swift in Sources */,
-				5FB979161EBD4EC800071E07 /* SavedCamera.swift in Sources */,
 				5F39667F1EB024BC003A0A8E /* AppDelegate.swift in Sources */,
+				5F5C29B31ECE008D0046D41F /* HomeManagerDelegate.swift in Sources */,
 				5F7839161EB41AB1002410EB /* HomeKitViewController.swift in Sources */,
-				5FB979141EBD4C5900071E07 /* SceneCollectionViewController.swift in Sources */,
+				5F0503ED1EC57D14003CD0E8 /* ColladaRig.swift in Sources */,
+				5F5C29B11ECE00660046D41F /* HomeDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +324,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MyHouse/MyHouse.entitlements;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = MyHouse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -314,7 +337,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MyHouse/MyHouse.entitlements;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = MyHouse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

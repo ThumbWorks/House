@@ -11,27 +11,46 @@ import SceneKit
 import HomeKit
 
 class ViewController: UIViewController {
-
+    
     let homeManager = HMHomeManager()
     var accessoryBrowser: HMAccessoryBrowser?
-    
-    var cameras = [HouseView]()
+    let homeManagerDelegate = HomeManagerDelegate()
+
     @IBOutlet weak var sceneView: SCNView!
     
-    @IBAction func addCamera(_ sender: Any) {
-        if let pov = sceneView.pointOfView, let camera = pov.camera {
-            print("add camera \(camera) \(pov.rotation) \(pov.position)")
-            let alert = UIAlertController(title: "Choose a name for this view", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
-                if let name = alert.textFields?.first?.text {
-                    let cam = HouseView(name: name, node: pov)
-                    self.cameras.append(cam)
-                }
-            }))
-            alert.addTextField(configurationHandler: { (textField) in
-                print("do I need to do somethiung here?")
-            })
-            self.present(alert, animated: true)
+    var originalXAngle: Float = 0.0
+    var originalZHeight: Float = 0.0
+    
+    let kitchenFloorID = "ID3073"
+
+    let cameraNode = SCNNode()
+    
+    // a proxy camera for testing guesture things
+    let boxNode = SCNNode()
+
+    var cameraSphereNode = SCNNode()
+    let sphere = SCNSphere(radius: CGFloat(100))
+
+    @IBAction func pan(_ pan: UIPanGestureRecognizer) {
+        
+        let translation = pan.translation(in: self.view)
+        
+        // left to right pan values
+        var newAngleX = (Float)(translation.x)*(Float)(Double.pi)/180.0
+        newAngleX += originalXAngle
+        
+        // vertical pan values
+        let newAngleY = -(Float)(translation.y)*(Float)(Double.pi)/180.0 * 20 // Multiply by 20 just to speed it up
+        
+        switch pan.state {
+        case .began:
+            originalXAngle = cameraSphereNode.eulerAngles.z
+            originalZHeight = boxNode.position.z
+        case .changed:
+            cameraSphereNode.eulerAngles.z = newAngleX
+            boxNode.position.z = originalZHeight + newAngleY
+        default:
+            print("something else")
         }
     }
     
@@ -41,12 +60,49 @@ class ViewController: UIViewController {
         accessoryBrowser?.startSearchingForNewAccessories()
     }
     
-    func animateToCamera(pov: SCNNode) {
+    func delayAnimateCameraNode(cameraNode: SCNNode, position: SCNVector3, delay: Int) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(delay)) {
+            print("position is \(position). rotation \(cameraNode.rotation)")
+            
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = 2
+            SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            cameraNode.position = position
+            SCNTransaction.commit()
+        }
+    }
+    
+    func animatePOVToNode(node: SCNNode) {
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 1
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        sceneView.pointOfView = pov
+        sceneView.pointOfView = node
         SCNTransaction.commit()
+    }
+    
+    func isFloor(node: SCNNode) {
+        /// for finding floors so we can zoom in on them perhaps
+        print(node.name)
+        print(node.boundingBox)
+        let maxZ = node.boundingBox.max.z
+        let minZ = node.boundingBox.min.z
+        
+        if maxZ == minZ {
+            print("this is likely a floor we can lookat")
+            if let name = node.name {
+                // move the center of the cameraSphereNode to that thing
+            }
+        }
+        
+    }
+    
+    func isMaterialInSet(_ geometry: SCNGeometry, materialNames: [String]) -> Bool {
+        for materialName in materialNames {
+            if let _ = geometry.material(named: materialName) {
+                return true
+            }
+        }
+        return false
     }
     
     @IBAction func tappedScene(_ sender: UITapGestureRecognizer) {
@@ -55,27 +111,129 @@ class ViewController: UIViewController {
             let location = sender.location(in: view)
             let hittestResults = sceneView.hitTest(location, options: nil)
             for result in hittestResults {
+                let node = result.node
+
+                //isFloor(node: node)
                 
-                if let geometry = result.node.geometry {
-                    if geometry.material(named: "material_5") != nil {
-                        print("Found the door through it's material")
-//                        if let camera = sceneView.scene?.rootNode.childNode(withName: "skp_camera_FrontDoor", recursively: true) as SCNCamera {
-//                            animateToCamera(camera: camera)
-//                            performSegue(withIdentifier: "homekitUISegueID", sender: nil)
-//                        }
+                if let geometry = node.geometry {
+                    print(geometry.materials.map({ (material) -> String? in
+                        return material.name
+                    }))
+                
+                    if isMaterialInSet(geometry, materialNames: ["material_5", "Wood_Floor_Dark", "Pavers_Driveway_Brick", "_Wood_Floor_Dark__3", "_Wood_Floor_Dark__2", "Slate_Light_Tile", "Blacktop_Old_02"]) {
+                        print("Found the door through it's material. It's bounding box is: \(node.boundingBox). How would I set a camera to look at that. ")
+                        
+                        
+                        // now move our camerasphere to the door
+                        
+                        print("node is \(node.boundingSphere.center)")
+                    
+                        SCNTransaction.begin()
+                        SCNTransaction.animationDuration = 1
+                        SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+                        cameraSphereNode.position = node.boundingSphere.center
+                        sphere.radius = CGFloat(node.boundingSphere.radius * 3)
+                        boxNode.position.x = Float(sphere.radius)
+                        SCNTransaction.commit()
+                        
+                        
+                        break
+                        var position = node.boundingBox.min
+                        position.x = position.x + 100
+                        position.y = position.y + 100
+                        position.z = position.z + 100
+                        
+                        let camera = SCNCamera()
+                        let node = SCNNode()
+                        node.camera = camera
+                        sceneView.scene?.rootNode.addChildNode(node)
+                        node.position = cameraNode.position
+                        sceneView.pointOfView = node
+                        delayAnimateCameraNode(cameraNode: node, position: position, delay: 1)
+                        
+                        // now i need to make a camera that faces this object
+                        //if let camera = sceneView.scene?.rootNode.childNode(withName: "skp_camera_FrontDoor", recursively: true) as SCNCamera {
+                          //  animateToCamera(camera: camera)
+                            //performSegue(withIdentifier: "homekitUISegueID", sender: nil)
+                        //}
                     }
                 }
             }
         }
         
     }
- 
+
+    override func viewDidLoad() {
+        // setup hit test
+        sceneView.autoenablesDefaultLighting = true
+        sceneView.showsStatistics = true
+        
+        // set up our camera mounting sphere
+        boxNode.geometry = SCNBox(width: 60, height: 60, length: 60, chamferRadius: 4.0)
+
+        
+        let material = SCNMaterial()
+        let samImageName = "/Users/roderic/Desktop/SamIcon/Icon-98.png"
+        material.diffuse.contents = UIImage(contentsOfFile: samImageName)
+        material.transparency = 0.5
+        sphere.materials = [material]
+        
+        cameraSphereNode.geometry = sphere
+        
+        boxNode.position = SCNVector3Make(Float(sphere.radius), 0, 30)
+        cameraSphereNode.addChildNode(boxNode)
+
+        // set up the SCNCamera
+        let camera = SCNCamera()
+        camera.automaticallyAdjustsZRange = true
+        //camera.zFar = 10000
+        cameraNode.camera = camera
+        
+        // set the position of the node to 500 above the origin (z == 500)
+        let position = SCNVector3(x: 0, y: -500, z: 1200)
+        cameraNode.position = position
+        
+        cameraNode.rotation =
+            SCNVector4Make(1, 0, 0, // rotate around X
+                atan2f(10.0, 20.0)); // -atan(camY/camZ)
+        
+        sceneView.scene?.rootNode.addChildNode(cameraSphereNode)
+        
+        // add the node to the scene (may be redundant after multiple viewDidAppear calls)
+        sceneView.scene?.rootNode.addChildNode(cameraNode)
+        sceneView.pointOfView = cameraNode
+
+    }
+    
+    func viewFromSource(source: String) {
+        let sceneRoot = self.sceneView.scene?.rootNode
+
+        if let cameraNode = sceneRoot?.childNode(withName: source, recursively: true), let kitchenFloor = sceneRoot?.childNode(withName: kitchenFloorID, recursively: true) {
+            
+            let newCameraNode = SCNNode()
+            let camera = SCNCamera()
+            newCameraNode.camera = camera
+            camera.zFar = 10000
+            camera.zNear = 1
+            newCameraNode.position = cameraNode.boundingBox.max
+
+            cameraNode.addChildNode(newCameraNode)
+            let floorLookatConstraint = SCNLookAtConstraint(target: kitchenFloor)
+            newCameraNode.constraints = [floorLookatConstraint]
+            animatePOVToNode(node: newCameraNode)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let homeKitViewController = segue.destination as? HomeKitViewController {
+            // get the lock
+            homeKitViewController.lockAccessory = homeManager.primaryHome?.accessories.first
+        }        
+    }
+    
     func homekitSetup() {
-        
         // TODO: Currently this is not called
-        
-        
-        homeManager.delegate = self
+        homeManager.delegate = homeManagerDelegate
         
         if homeManager.homes.count == 0 {
             print("there are no homes")
@@ -144,80 +302,16 @@ class ViewController: UIViewController {
             }
         }
     }
-        
-    override func viewDidLoad() {
-        // setup hit test
-        sceneView.autoenablesDefaultLighting = true
-        sceneView.showsStatistics = true
-//        sceneView.scene.camera.zfar = 2000
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let homeKitViewController = segue.destination as? HomeKitViewController {            
-            // get the lock
-            homeKitViewController.lockAccessory = homeManager.primaryHome?.accessories.first
-        }
-        
-        if let sceneCollection = segue.destination as? SceneCollectionViewController {
-            sceneCollection.cameras = cameras
-            sceneCollection.completion = { (indexPath) in
-                print("indexPath \(indexPath)")
-                let pov = self.cameras[indexPath.row].savedNode
-                self.animateToCamera(pov: pov)
-                self.dismiss(animated: true)
-            }
-        }
-    }
+}
 
-}
-extension ViewController: HMHomeManagerDelegate {
-    func homeManagerDidUpdateHomes(_ manager: HMHomeManager) {
-        print("updated homes")
-    }
-    func homeManagerDidUpdatePrimaryHome(_ manager: HMHomeManager) {
-        print("updated primary")
-    }
-    func homeManager(_ manager: HMHomeManager, didAdd home: HMHome) {
-        print("did add a home \(home)")
-    }
-    func homeManager(_ manager: HMHomeManager, didRemove home: HMHome) {
-        print("did remove \(home)")
-    }
-}
-extension ViewController: HMHomeDelegate {
-    func homeDidUpdateName(_ home: HMHome) {
-        print("new name for home \(home)")
-    }
-    func home(_ home: HMHome, didAdd room: HMRoom) {
-        print("added a room \(room)")
-    }
-    func home(_ home: HMHome, didAdd user: HMUser) {
-        print("added a iuser \(user)")
-    }
-    func home(_ home: HMHome, didAdd zone: HMZone) {
-        print("added a zone \(zone)")
-    }
-    func home(_ home: HMHome, didRemove room: HMRoom) {
-        print("remove a room \(room)")
-    }
-    func home(_ home: HMHome, didRemove user: HMUser) {
-        print("removed a user \(user)")
-    }
-}
+
+
 extension ViewController: HMAccessoryBrowserDelegate {
     func accessoryBrowser(_ browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
         print("found this one \(accessory)")
         homeManager.primaryHome?.addAccessory(accessory, completionHandler: { (error) in
             print("error adding accessory \(String(describing: error))")
         })
-    }
-}
-
-extension ViewController {
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("end 2")
-        
-        sceneView.pointOfView?.camera
     }
 }
 
