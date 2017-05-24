@@ -22,6 +22,7 @@
 		5FEEF3351EC65A5500664803 /* Logan.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEF3341EC65A5500664803 /* Logan.dae */; };
 		5FEEF3371EC65B0E00664803 /* Logan-Run.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEF3361EC65B0E00664803 /* Logan-Run.dae */; };
 		5FF978971ED3F40000AC0733 /* Arbutus.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FF978961ED3F40000AC0733 /* Arbutus.dae */; };
+		5FF9789F1ED5186200AC0733 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9789E1ED5186200AC0733 /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		5FEEF3341EC65A5500664803 /* Logan.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Logan.dae; sourceTree = "<group>"; };
 		5FEEF3361EC65B0E00664803 /* Logan-Run.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "Logan-Run.dae"; sourceTree = "<group>"; };
 		5FF978961ED3F40000AC0733 /* Arbutus.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Arbutus.dae; sourceTree = "<group>"; };
+		5FF9789E1ED5186200AC0733 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				5F5C29B01ECE00660046D41F /* HomeDelegate.swift */,
 				5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */,
+				5FF9789E1ED5186200AC0733 /* HomeController.swift */,
 			);
 			name = HomeKitManagers;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			files = (
 				5F3966811EB024BD003A0A8E /* ViewController.swift in Sources */,
 				5F39667F1EB024BC003A0A8E /* AppDelegate.swift in Sources */,
+				5FF9789F1ED5186200AC0733 /* HomeController.swift in Sources */,
 				5F5C29B31ECE008D0046D41F /* HomeManagerDelegate.swift in Sources */,
 				5F7839161EB41AB1002410EB /* HomeKitViewController.swift in Sources */,
 				5F0503ED1EC57D14003CD0E8 /* ColladaRig.swift in Sources */,
