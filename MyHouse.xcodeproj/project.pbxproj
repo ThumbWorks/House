@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5F0503EB1EC57534003CD0E8 /* walking3.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EA1EC57534003CD0E8 /* walking3.dae */; };
-		5F0503ED1EC57D14003CD0E8 /* ColladaRig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0503EC1EC57D14003CD0E8 /* ColladaRig.swift */; };
 		5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EE1EC580DA003CD0E8 /* walking.dae */; };
 		5F24C44A1EC56C8200A97F01 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F24C4491EC56C8200A97F01 /* art.scnassets */; };
 		5F39667F1EB024BC003A0A8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F39667E1EB024BC003A0A8E /* AppDelegate.swift */; };
@@ -27,7 +26,6 @@
 
 /* Begin PBXFileReference section */
 		5F0503EA1EC57534003CD0E8 /* walking3.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking3.dae; sourceTree = "<group>"; };
-		5F0503EC1EC57D14003CD0E8 /* ColladaRig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColladaRig.swift; sourceTree = "<group>"; };
 		5F0503EE1EC580DA003CD0E8 /* walking.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking.dae; sourceTree = "<group>"; };
 		5F24C4491EC56C8200A97F01 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		5F39667B1EB024BC003A0A8E /* MyHouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,7 +91,6 @@
 				5F3966871EB024BD003A0A8E /* LaunchScreen.storyboard */,
 				5F39668A1EB024BD003A0A8E /* Info.plist */,
 				5F7839151EB41AB1002410EB /* HomeKitViewController.swift */,
-				5F0503EC1EC57D14003CD0E8 /* ColladaRig.swift */,
 			);
 			path = MyHouse;
 			sourceTree = "<group>";
@@ -204,7 +201,6 @@
 				5FF9789F1ED5186200AC0733 /* HomeController.swift in Sources */,
 				5F5C29B31ECE008D0046D41F /* HomeManagerDelegate.swift in Sources */,
 				5F7839161EB41AB1002410EB /* HomeKitViewController.swift in Sources */,
-				5F0503ED1EC57D14003CD0E8 /* ColladaRig.swift in Sources */,
 				5F5C29B11ECE00660046D41F /* HomeDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
