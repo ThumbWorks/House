@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F0503EB1EC57534003CD0E8 /* walking3.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EA1EC57534003CD0E8 /* walking3.dae */; };
 		5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EE1EC580DA003CD0E8 /* walking.dae */; };
+		5F1944F91EE4B441003510A2 /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F1944F81EE4B441003510A2 /* HomeKit.framework */; };
 		5F24C44A1EC56C8200A97F01 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F24C4491EC56C8200A97F01 /* art.scnassets */; };
 		5F39667F1EB024BC003A0A8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F39667E1EB024BC003A0A8E /* AppDelegate.swift */; };
 		5F3966811EB024BD003A0A8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3966801EB024BD003A0A8E /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		5F0503EA1EC57534003CD0E8 /* walking3.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking3.dae; sourceTree = "<group>"; };
 		5F0503EE1EC580DA003CD0E8 /* walking.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking.dae; sourceTree = "<group>"; };
+		5F1944F81EE4B441003510A2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
 		5F24C4491EC56C8200A97F01 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		5F39667B1EB024BC003A0A8E /* MyHouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F39667E1EB024BC003A0A8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F1944F91EE4B441003510A2 /* HomeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +111,7 @@
 		5F7839181EB45A36002410EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5F1944F81EE4B441003510A2 /* HomeKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,7 +152,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HomeKit = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -324,6 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MyHouse/MyHouse.entitlements;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = MyHouse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -337,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MyHouse/MyHouse.entitlements;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = MyHouse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

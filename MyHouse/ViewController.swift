@@ -11,6 +11,9 @@ import SceneKit
 
 class ViewController: UIViewController {
     
+    let homeController = HomeController()
+    
+    @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var sceneView: SCNView!
     
     @IBOutlet weak var backHomeButton: UIButton!
@@ -174,6 +177,13 @@ class ViewController: UIViewController {
         sceneView.pointOfView = boxNode
         
         moveSphereTo(centerNode, radius: 500, height: 300, shouldShowHomeButton: false)
+        
+        homeController.temperatureClosure = { (temp: Float) in
+            print("Got the temp at the view controller \(temp)")
+            self.temperatureLabel.text = "Internal Temperature: \(temp)"
+            self.temperatureLabel.isHidden = false
+        }
+        homeController.homekitSetup()
     }
 }
 

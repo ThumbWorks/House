@@ -15,6 +15,9 @@ class HomeController: NSObject {
     var accessoryBrowser: HMAccessoryBrowser?
     let homeManagerDelegate = HomeManagerDelegate()
 
+    var temperatureClosure = { (temp: Float) in
+        print("The temperature is \(temp)")
+    }
     
     @IBAction func addAccessory(_ sender: Any) {
         accessoryBrowser = HMAccessoryBrowser()
@@ -30,7 +33,6 @@ class HomeController: NSObject {
     }
     
     func homekitSetup() {
-        // TODO: Currently this is not called
         homeManager.delegate = homeManagerDelegate
         
         if homeManager.homes.count == 0 {
@@ -54,17 +56,22 @@ class HomeController: NSObject {
                     for service in accessory.services {
                         print("  service \(service.name)")
                     }
+                    print("\n\n")
                     for service in accessory.services {
                         print("  this service \(service.name) has characteristics")
                         for characteristic in service.characteristics {
-                            print("   characteristic \(characteristic.localizedDescription) \(characteristic.properties) \(characteristic.characteristicType)")
+                            print("   characteristic \(characteristic.localizedDescription)")//\(characteristic.properties) \(characteristic.characteristicType)")
                             if characteristic.localizedDescription == "Current Temperature" {
+                                print("     Let's query the Current temperature asyncronously")
                                 // read the current temperature
                                 characteristic.readValue(completionHandler: { (error) in
                                     if let error = error {
                                         print("There was an error reading the value of the charactersitic \(error.localizedDescription)")
                                     } else {
                                         print("successfully read the temperature value \(String(describing: characteristic.value))")
+                                        if let temperature =  characteristic.value as? Float {
+                                            self.temperatureClosure(temperature)
+                                        }
                                     }
                                 })
                                 

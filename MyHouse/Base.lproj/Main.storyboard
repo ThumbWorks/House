@@ -38,13 +38,21 @@
                                     <action selector="showHouse:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D7M-MX-XUH"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="02I-4O-sMV">
+                                <rect key="frame" x="10" y="626.5" width="65.5" height="32.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="FSU-R1-u5N" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-6" id="46E-1B-Ahz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xrK-Ft-bAf" secondAttribute="trailing" constant="-16" id="Dog-H4-NHp"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="02I-4O-sMV" secondAttribute="bottom" constant="8" id="MCm-Xe-Pwz"/>
                             <constraint firstItem="xrK-Ft-bAf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ZdX-oQ-Tbv"/>
                             <constraint firstItem="FSU-R1-u5N" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="lkn-Y4-4H8"/>
+                            <constraint firstItem="02I-4O-sMV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-6" id="mUd-vq-fdR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xrK-Ft-bAf" secondAttribute="bottom" id="t1R-aO-MbG"/>
                             <constraint firstItem="xrK-Ft-bAf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="zwn-OF-yD7"/>
                         </constraints>
@@ -52,6 +60,7 @@
                     <connections>
                         <outlet property="backHomeButton" destination="FSU-R1-u5N" id="BmA-Yu-x0c"/>
                         <outlet property="sceneView" destination="xrK-Ft-bAf" id="s15-9h-3w0"/>
+                        <outlet property="temperatureLabel" destination="02I-4O-sMV" id="E29-MR-icY"/>
                         <segue destination="46z-nA-ZhY" kind="presentation" identifier="homekitUISegueID" modalPresentationStyle="overCurrentContext" id="Lh2-Nw-BBd"/>
                     </connections>
                 </viewController>
