@@ -121,17 +121,26 @@ class ViewController: UIViewController {
         sphereNode.addChildNode(box)
     }
     
-    func addLights() {
+    func addLight(_ position: SCNVector3, color: UIColor) {
         // lights
-        let position = SCNVector3(x: 0, y: -200, z: 300)
         let ambient = SCNLight()
-        ambient.type = .ambient
-        ambient.color = UIColor.gray
-        ambient.shadowColor = UIColor.black
+        ambient.type = .omni
+        ambient.color = color.withAlphaComponent(0.4)
+        ambient.shadowColor = UIColor.gray.withAlphaComponent(0.5)
         
         let lightNode = SCNNode()
         lightNode.position = position
         lightNode.light = ambient
+        
+        let cameraColor = SCNMaterial()
+        cameraColor.diffuse.contents = color
+        
+        // Now create the geometry and set the colors
+        let geometry = SCNBox(width: 60, height: 60, length: 60, chamferRadius: 4.0)
+        lightNode.geometry = geometry
+        
+        geometry.materials = [cameraColor]
+        
         sceneView.scene?.rootNode.addChildNode(lightNode)
     }
     
@@ -173,7 +182,12 @@ class ViewController: UIViewController {
         boxNode.camera = createCamera()
         setupGodCamera()
         
-        addLights()
+        addLight(SCNVector3(x: 2000, y: 0, z: 2000), color: .red)
+        addLight(SCNVector3(x: 0, y: 2000, z: 2000), color: .green)
+        addLight(SCNVector3(x: -2000, y: 2000, z: 2000), color: .yellow)
+        addLight(SCNVector3(x: -2000, y: -2000, z: 2000), color: .red)
+        addLight(SCNVector3(x: 0, y: 0, z: 2000), color: .orange)
+        
         sceneView.pointOfView = boxNode
         
         moveSphereTo(centerNode, radius: 500, height: 300, shouldShowHomeButton: false)
