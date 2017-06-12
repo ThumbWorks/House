@@ -11,6 +11,8 @@
 		5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EE1EC580DA003CD0E8 /* walking.dae */; };
 		5F1944F91EE4B441003510A2 /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F1944F81EE4B441003510A2 /* HomeKit.framework */; };
 		5F24C44A1EC56C8200A97F01 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F24C4491EC56C8200A97F01 /* art.scnassets */; };
+		5F38329F1EEB16FC00CA4F7F /* Thermostat.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5F38329E1EEB16FC00CA4F7F /* Thermostat.sks */; };
+		5F3832A21EEB451B00CA4F7F /* Arbutus.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F3832A11EEB43F200CA4F7F /* Arbutus.dae */; };
 		5F39667F1EB024BC003A0A8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F39667E1EB024BC003A0A8E /* AppDelegate.swift */; };
 		5F3966811EB024BD003A0A8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3966801EB024BD003A0A8E /* ViewController.swift */; };
 		5F3966841EB024BD003A0A8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966821EB024BD003A0A8E /* Main.storyboard */; };
@@ -19,9 +21,9 @@
 		5F5C29B11ECE00660046D41F /* HomeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C29B01ECE00660046D41F /* HomeDelegate.swift */; };
 		5F5C29B31ECE008D0046D41F /* HomeManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */; };
 		5F7839161EB41AB1002410EB /* HomeKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7839151EB41AB1002410EB /* HomeKitViewController.swift */; };
+		5FBAF9601EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5FBAF95F1EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg */; };
 		5FEEF3351EC65A5500664803 /* Logan.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEF3341EC65A5500664803 /* Logan.dae */; };
 		5FEEF3371EC65B0E00664803 /* Logan-Run.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEF3361EC65B0E00664803 /* Logan-Run.dae */; };
-		5FF978971ED3F40000AC0733 /* Arbutus.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5FF978961ED3F40000AC0733 /* Arbutus.dae */; };
 		5FF9789F1ED5186200AC0733 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9789E1ED5186200AC0733 /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +32,8 @@
 		5F0503EE1EC580DA003CD0E8 /* walking.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking.dae; sourceTree = "<group>"; };
 		5F1944F81EE4B441003510A2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
 		5F24C4491EC56C8200A97F01 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		5F38329E1EEB16FC00CA4F7F /* Thermostat.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Thermostat.sks; sourceTree = "<group>"; };
+		5F3832A11EEB43F200CA4F7F /* Arbutus.dae */ = {isa = PBXFileReference; lastKnownFileType = text.xml.dae; path = Arbutus.dae; sourceTree = "<group>"; };
 		5F39667B1EB024BC003A0A8E /* MyHouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F39667E1EB024BC003A0A8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F3966801EB024BD003A0A8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -41,9 +45,9 @@
 		5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeManagerDelegate.swift; sourceTree = "<group>"; };
 		5F7839151EB41AB1002410EB /* HomeKitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitViewController.swift; sourceTree = "<group>"; };
 		5F7839171EB45A36002410EB /* MyHouse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyHouse.entitlements; sourceTree = "<group>"; };
+		5FBAF95F1EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tile_Limestone_Multi.jpg; sourceTree = "<group>"; };
 		5FEEF3341EC65A5500664803 /* Logan.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Logan.dae; sourceTree = "<group>"; };
 		5FEEF3361EC65B0E00664803 /* Logan-Run.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "Logan-Run.dae"; sourceTree = "<group>"; };
-		5FF978961ED3F40000AC0733 /* Arbutus.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Arbutus.dae; sourceTree = "<group>"; };
 		5FF9789E1ED5186200AC0733 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,19 +85,21 @@
 			children = (
 				5F5C29AF1ECE003B0046D41F /* HomeKitManagers */,
 				5F7839171EB45A36002410EB /* MyHouse.entitlements */,
+				5F3832A11EEB43F200CA4F7F /* Arbutus.dae */,
 				5F39667E1EB024BC003A0A8E /* AppDelegate.swift */,
 				5F3966801EB024BD003A0A8E /* ViewController.swift */,
 				5F3966821EB024BD003A0A8E /* Main.storyboard */,
-				5FF978961ED3F40000AC0733 /* Arbutus.dae */,
 				5F0503EE1EC580DA003CD0E8 /* walking.dae */,
 				5F0503EA1EC57534003CD0E8 /* walking3.dae */,
 				5FEEF3341EC65A5500664803 /* Logan.dae */,
 				5FEEF3361EC65B0E00664803 /* Logan-Run.dae */,
+				5FBAF95F1EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg */,
 				5F24C4491EC56C8200A97F01 /* art.scnassets */,
 				5F3966851EB024BD003A0A8E /* Assets.xcassets */,
 				5F3966871EB024BD003A0A8E /* LaunchScreen.storyboard */,
 				5F39668A1EB024BD003A0A8E /* Info.plist */,
 				5F7839151EB41AB1002410EB /* HomeKitViewController.swift */,
+				5F38329E1EEB16FC00CA4F7F /* Thermostat.sks */,
 			);
 			path = MyHouse;
 			sourceTree = "<group>";
@@ -183,11 +189,13 @@
 			files = (
 				5F3966891EB024BD003A0A8E /* LaunchScreen.storyboard in Resources */,
 				5F24C44A1EC56C8200A97F01 /* art.scnassets in Resources */,
-				5FF978971ED3F40000AC0733 /* Arbutus.dae in Resources */,
 				5FEEF3351EC65A5500664803 /* Logan.dae in Resources */,
 				5F3966861EB024BD003A0A8E /* Assets.xcassets in Resources */,
 				5F3966841EB024BD003A0A8E /* Main.storyboard in Resources */,
+				5FBAF9601EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg in Resources */,
+				5F38329F1EEB16FC00CA4F7F /* Thermostat.sks in Resources */,
 				5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */,
+				5F3832A21EEB451B00CA4F7F /* Arbutus.dae in Resources */,
 				5F0503EB1EC57534003CD0E8 /* walking3.dae in Resources */,
 				5FEEF3371EC65B0E00664803 /* Logan-Run.dae in Resources */,
 			);
@@ -331,6 +339,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyHouse/MyHouse.entitlements;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = MyHouse/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.MyHouse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -345,6 +354,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyHouse/MyHouse.entitlements;
 				DEVELOPMENT_TEAM = F4WTN36U2F;
 				INFOPLIST_FILE = MyHouse/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.thumbworks.MyHouse;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -21,8 +21,6 @@ class ViewController: UIViewController {
     var originalXAngle: Float = 0.0
     var originalZHeight: Float = 0.0
     
-    let kitchenFloorID = "ID3073"
-
     let cameraNode = SCNNode()
 
     // a proxy camera for testing guesture things
@@ -101,9 +99,8 @@ class ViewController: UIViewController {
         let camera = SCNCamera()
         // set up the SCNCamera
         camera.automaticallyAdjustsZRange = true
+        camera.screenSpaceAmbientOcclusionIntensity = 1
         camera.zFar = 10000
-        camera.yFov = 105
-        camera.xFov = 105
         return camera
     }
     
@@ -124,7 +121,8 @@ class ViewController: UIViewController {
     func addLight(_ position: SCNVector3, color: UIColor) {
         // lights
         let ambient = SCNLight()
-        ambient.type = .omni
+        ambient.type = .ambient
+        ambient.intensity = 200
         ambient.color = color.withAlphaComponent(0.4)
         ambient.shadowColor = UIColor.gray.withAlphaComponent(0.5)
         
@@ -173,20 +171,22 @@ class ViewController: UIViewController {
         createBoxGeometry(box: boxNode)
         setupCameraSphere(sphere, sphereNode: cameraSphereNode, box: boxNode)
         boxNode.eulerAngles = SCNVector3Make(Float.pi/2, 0, Float.pi)
-    
+        
         sceneView.scene?.rootNode.addChildNode(cameraSphereNode)
+        
+//        let thermostat = sceneView.scene?.rootNode.childNode(withName: "ThermostatNode", recursively: true)
+//        print("thermostat is \(String(describing: thermostat))")
+//        thermostat?.constraints = [SCNBillboardConstraint()]
         
         // add the cameraNode to the scene (may be redundant after multiple viewDidAppear calls)
         sceneView.scene?.rootNode.addChildNode(cameraNode)
 
         boxNode.camera = createCamera()
-        setupGodCamera()
+//        setupGodCamera()
         
-        addLight(SCNVector3(x: 2000, y: 0, z: 2000), color: .red)
-        addLight(SCNVector3(x: 0, y: 2000, z: 2000), color: .green)
-        addLight(SCNVector3(x: -2000, y: 2000, z: 2000), color: .yellow)
-        addLight(SCNVector3(x: -2000, y: -2000, z: 2000), color: .red)
-        addLight(SCNVector3(x: 0, y: 0, z: 2000), color: .orange)
+        addLight(SCNVector3(x: 2000, y: 0, z: 2000), color: .white)
+        addLight(SCNVector3(x: -2000, y: -2000, z: 2000), color: .white)
+//        addLight(SCNVector3(x: 0, y: 0, z: 2000), color: .white)
         
         sceneView.pointOfView = boxNode
         
@@ -242,6 +242,29 @@ extension ViewController {
         }
     }
     
+    @IBAction func doubleTappedScene(_ sender: UITapGestureRecognizer) {
+        if (sender.state == .ended) {
+            let location = sender.location(in: view)
+            let hittestResults = sceneView.hitTest(location, options: nil)
+            for result in hittestResults {
+                let node = result.node
+                
+                if isFloor(node) {
+                    // add the zombie node here
+                    if let zombieScene = SCNScene(named: "walking3.dae") {
+                        //        if let houseNode = SCNScene(named: "art.scnassets/RandomShape.dae") {
+                        let zombie = zombieScene.rootNode
+                        print("zombie dimensions \(result.worldCoordinates)")
+                        zombie.position = result.worldCoordinates
+                        sceneView.scene?.rootNode.addChildNode(zombie)
+                    }
+
+                    
+                }
+            }
+        }
+    }
+        
     @IBAction func tappedScene(_ sender: UITapGestureRecognizer) {
         
         if (sender.state == .ended) {

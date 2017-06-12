@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,6 +28,7 @@
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Nw0-Dj-vmb" appends="YES" id="OPv-Nk-ITo"/>
                                     <outletCollection property="gestureRecognizers" destination="P4Q-15-1sT" appends="YES" id="q4R-gC-pQj"/>
+                                    <outletCollection property="gestureRecognizers" destination="k7J-R5-ZaY" appends="YES" id="6NM-xY-6wr"/>
                                 </connections>
                             </sceneKitView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSU-R1-u5N">
@@ -39,7 +39,7 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="02I-4O-sMV">
-                                <rect key="frame" x="10" y="626.5" width="65.5" height="32.5"/>
+                                <rect key="frame" x="10" y="626.5" width="64" height="32.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -59,7 +59,7 @@
                     </view>
                     <connections>
                         <outlet property="backHomeButton" destination="FSU-R1-u5N" id="BmA-Yu-x0c"/>
-                        <outlet property="sceneView" destination="xrK-Ft-bAf" id="s15-9h-3w0"/>
+                        <outlet property="sceneView" destination="xrK-Ft-bAf" id="ife-4Q-9Wd"/>
                         <outlet property="temperatureLabel" destination="02I-4O-sMV" id="E29-MR-icY"/>
                         <segue destination="46z-nA-ZhY" kind="presentation" identifier="homekitUISegueID" modalPresentationStyle="overCurrentContext" id="Lh2-Nw-BBd"/>
                     </connections>
@@ -75,6 +75,11 @@
                         <action selector="pan:" destination="BYZ-38-t0r" id="q75-Fi-hSP"/>
                     </connections>
                 </panGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="k7J-R5-ZaY">
+                    <connections>
+                        <action selector="doubleTappedScene:" destination="BYZ-38-t0r" id="JCc-Sm-rXL"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
         </scene>
@@ -91,7 +96,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86F-1w-h0S">
-                                <rect key="frame" x="26" y="30" width="97" height="46"/>
+                                <rect key="frame" x="26" y="30" width="95" height="46"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="Dismiss"/>
                                 <connections>
@@ -99,7 +104,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ol4-jr-rSn">
-                                <rect key="frame" x="268" y="31" width="81" height="45"/>
+                                <rect key="frame" x="271" y="31" width="78" height="45"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Toggle"/>
                                 <connections>
