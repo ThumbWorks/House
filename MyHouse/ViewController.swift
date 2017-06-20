@@ -18,16 +18,11 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var backHomeButton: UIButton!
     
-    var originalXAngle: Float = 0.0
-    var originalZHeight: Float = 0.0
-    
-    let cameraNode = SCNNode()
-
     // a proxy camera for testing guesture things
-    let boxNode = SCNNode()
-
+//    let boxNode = SCNNode()
+    let cameraNode = SCNNode()
+    
     var centerNode = SCNNode()
-    var cameraSphereNode = SCNNode()
     let sphere = SCNSphere()
     
     func isFloor(_ node: SCNNode) -> Bool {
@@ -51,48 +46,53 @@ class ViewController: UIViewController {
         }
         return false
     }
-    
-    func moveSphereTo(_ node: SCNNode, radius: Float, height: Float, shouldShowHomeButton: Bool) {
+    var distance:CGFloat = 1000.0
+    func moveSphereTo(_ node: SCNNode, shouldShowHomeButton: Bool) {
+        print("Attempting to move the sphere the camera on the box is \(cameraNode.camera)")
+            
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 1
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        cameraSphereNode.position = node.boundingSphere.center
-        cameraSphereNode.position.z = height
-        sphere.radius = CGFloat(radius)
-        boxNode.position.y = radius
+        
+        self.distance = self.distance - 50
+        let lookat = SCNLookAtConstraint(target: node)
+        let distance = SCNDistanceConstraint(target: node)
+        distance.maximumDistance = self.distance
+        distance.minimumDistance = self.distance - 10.0
+        cameraNode.constraints = [lookat, distance]
         SCNTransaction.completionBlock = {
+            print("the move happened")
             self.backHomeButton.isHidden = !shouldShowHomeButton
         }
         SCNTransaction.commit()
     }
 
     // set up our SCNBox which will hold the camera
-    func createBoxGeometry(box: SCNNode) {
+    func createBoxGeometry() -> SCNGeometry {
         
         // create the colors
         let green = SCNMaterial()
-        green.diffuse.contents = UIColor.green
+        green.diffuse.contents = UIColor.green.withAlphaComponent(0.5)
         
         let red = SCNMaterial()
-        red.diffuse.contents = UIColor.red
+        red.diffuse.contents = UIColor.red.withAlphaComponent(0.5)
         
         let blue = SCNMaterial()
-        blue.diffuse.contents = UIColor.blue
+        blue.diffuse.contents = UIColor.blue.withAlphaComponent(0.5)
         
         let purple = SCNMaterial()
-        purple.diffuse.contents = UIColor.purple
+        purple.diffuse.contents = UIColor.purple.withAlphaComponent(0.5)
         
         let orange = SCNMaterial()
-        orange.diffuse.contents = UIColor.orange
+        orange.diffuse.contents = UIColor.orange.withAlphaComponent(0.5)
         
         let yellow = SCNMaterial()
-        yellow.diffuse.contents = UIColor.yellow
+        yellow.diffuse.contents = UIColor.yellow.withAlphaComponent(0.5)
         
         // Now create the geometry and set the colors
         let geometry = SCNBox(width: 60, height: 60, length: 60, chamferRadius: 4.0)
-        boxNode.geometry = geometry
-        
         geometry.materials = [green, orange, purple, blue, yellow, red]
+        return geometry
     }
     
     func createCamera() -> SCNCamera {
@@ -100,22 +100,8 @@ class ViewController: UIViewController {
         // set up the SCNCamera
         camera.automaticallyAdjustsZRange = true
         camera.screenSpaceAmbientOcclusionIntensity = 1
-        camera.zFar = 10000
+        camera.zFar = 100000
         return camera
-    }
-    
-    func setupCameraSphere(_ sphere: SCNSphere, sphereNode: SCNNode, box: SCNNode) {
-        
-        let material = SCNMaterial()
-        material.diffuse.contents = UIColor.clear
-        sphere.materials = [material]
-        
-        let radius: CGFloat = 200
-        sphere.radius = radius
-        box.position = SCNVector3Make(0, Float(radius), 0)
-        sphereNode.position = SCNVector3Make(50, 50, 100)
-        sphereNode.geometry = sphere
-        sphereNode.addChildNode(box)
     }
     
     func addLight(_ position: SCNVector3, color: UIColor) {
@@ -141,26 +127,27 @@ class ViewController: UIViewController {
         
         sceneView.scene?.rootNode.addChildNode(lightNode)
     }
-    
-    func createGreenBoxForReference() {
-        let greenBoxGeometry = SCNBox(width: 60, height: 60, length: 60, chamferRadius: 4.0)
-        let greenNode = SCNNode(geometry: greenBoxGeometry)
+    override func viewDidAppear(_ animated: Bool) {
+        addLight(SCNVector3(x: 2000, y: 0, z: 2000), color: .white)
+        addLight(SCNVector3(x: -2000, y: -2000, z: 2000), color: .white)
         
-        let greenMaterial = SCNMaterial()
-        greenMaterial.diffuse.contents = UIColor.green
-        greenBoxGeometry.materials = [greenMaterial]
-        cameraSphereNode.addChildNode(greenNode)
-    }
-    
-    func setupGodCamera() {
-        // set the god camera
-        let position = SCNVector3(x: 100, y: -400, z: 350)
-        // set the position of the node to 500 above the origin (z == 500)
-        cameraNode.position = position
-        cameraNode.rotation =
-            SCNVector4Make(1, 0, 0, // rotate around X
-                -atan2f(-250, 600)); // -atan(camY/camZ)
-        cameraNode.camera = createCamera()
+        let camera = createCamera()
+        
+        guard let scene = sceneView.scene else {
+            print("there is no scene")
+            return
+        }
+//        cameraNode.geometry = createBoxGeometry()
+        cameraNode.camera = camera
+        scene.rootNode.addChildNode(cameraNode)
+        
+        sceneView.pointOfView = cameraNode
+        
+        cameraNode.position = SCNVector3Make(Float(400), Float(-1000), Float(900))
+        let node = scene.rootNode.childNode(withName: "ID2633", recursively: true)
+        
+        let lookat = SCNLookAtConstraint(target: node)
+        cameraNode.constraints = [lookat]
     }
     
     override func viewDidLoad() {
@@ -168,30 +155,16 @@ class ViewController: UIViewController {
         sceneView.autoenablesDefaultLighting = true
         sceneView.showsStatistics = true
         
-        createBoxGeometry(box: boxNode)
-        setupCameraSphere(sphere, sphereNode: cameraSphereNode, box: boxNode)
-        boxNode.eulerAngles = SCNVector3Make(Float.pi/2, 0, Float.pi)
-        
-        sceneView.scene?.rootNode.addChildNode(cameraSphereNode)
+        //warning: We might be able to remove the boxNode object.
+//        boxNode.eulerAngles = SCNVector3Make(Float.pi/2, 0, Float.pi)
         
 //        let thermostat = sceneView.scene?.rootNode.childNode(withName: "ThermostatNode", recursively: true)
 //        print("thermostat is \(String(describing: thermostat))")
 //        thermostat?.constraints = [SCNBillboardConstraint()]
-        
-        // add the cameraNode to the scene (may be redundant after multiple viewDidAppear calls)
-        sceneView.scene?.rootNode.addChildNode(cameraNode)
-
-        boxNode.camera = createCamera()
-//        setupGodCamera()
-        
-        addLight(SCNVector3(x: 2000, y: 0, z: 2000), color: .white)
-        addLight(SCNVector3(x: -2000, y: -2000, z: 2000), color: .white)
-//        addLight(SCNVector3(x: 0, y: 0, z: 2000), color: .white)
-        
-        sceneView.pointOfView = boxNode
-        
-        moveSphereTo(centerNode, radius: 500, height: 300, shouldShowHomeButton: false)
-        
+//        sceneView.scene?.rootNode.addChildNode(boxNode)
+//        boxNode.camera = createCamera()
+//        sceneView.pointOfView = createCamera()
+                
         homeController.temperatureClosure = { (temp: Float) in
             print("Got the temp at the view controller \(temp)")
             self.temperatureLabel.text = "Internal Temperature: \(temp)"
@@ -204,42 +177,19 @@ class ViewController: UIViewController {
 extension ViewController {
     
     @IBAction func showHouse(_ sender: UIButton) {
+        print("Don't actually do the show house thing. Just update the constraints")
+        return
         backHomeButton.isHidden = true
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 1
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         
-        moveSphereTo(centerNode, radius: 500, height: 300, shouldShowHomeButton: false)
-        boxNode.position.y = Float(sphere.radius)
+        moveSphereTo(centerNode, shouldShowHomeButton: false)
+//        boxNode.position.y = Float(sphere.radius)
         SCNTransaction.completionBlock = {
             print("re-enable buttons after showing house")
         }
         SCNTransaction.commit()
-    }
-
-    @IBAction func pan(_ pan: UIPanGestureRecognizer) {
-        
-        let translation = pan.translation(in: self.view)
-        
-        // left to right pan values
-        var newAngleX = (Float)(translation.x)*(Float)(Double.pi)/180.0
-        newAngleX += originalXAngle
-        
-        // vertical pan values
-        let newAngleY = -(Float)(translation.y)*(Float)(Double.pi)/180.0 * 20 // Multiply by 20 just to speed it up
-        
-        switch pan.state {
-        case .began:
-            originalXAngle = cameraSphereNode.eulerAngles.z
-            originalZHeight = boxNode.position.z
-        case .changed:
-            cameraSphereNode.eulerAngles.z = newAngleX
-            boxNode.position.z = originalZHeight + newAngleY            
-            print("boxNode after rotation \(boxNode.position) \(boxNode.rotation)")
-
-        default:
-            print("something else")
-        }
     }
     
     @IBAction func doubleTappedScene(_ sender: UITapGestureRecognizer) {
@@ -274,7 +224,9 @@ extension ViewController {
                 let node = result.node
                 
                 if isFloor(node) {
-                    moveSphereTo(node, radius:10, height: node.position.z + 100, shouldShowHomeButton: true)
+                    // update constraint on the camera I guess
+                    // Right, again here is where we update the constraints. Let's revisit this and not move the sphere
+                    moveSphereTo(node, shouldShowHomeButton: true)
                     return
                 }
                 
@@ -286,7 +238,7 @@ extension ViewController {
                     if isMaterialInSet(geometry, materialNames: ["material_5"]) {
                         // now move our camerasphere to the door
                         print("Found the door through it's material")
-                        moveSphereTo(node, radius:node.boundingSphere.radius * 2, height: node.position.z + 10, shouldShowHomeButton: true)
+                        moveSphereTo(node, shouldShowHomeButton: true)
                     }
                 }
             }

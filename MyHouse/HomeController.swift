@@ -19,19 +19,6 @@ class HomeController: NSObject {
         print("The temperature is \(temp)")
     }
     
-    @IBAction func addAccessory(_ sender: Any) {
-        accessoryBrowser = HMAccessoryBrowser()
-        accessoryBrowser?.delegate = self
-        accessoryBrowser?.startSearchingForNewAccessories()
-    }
-    
-    /*override*/ func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let homeKitViewController = segue.destination as? HomeKitViewController {
-            // get the lock
-            homeKitViewController.lockAccessory = homeManager.primaryHome?.accessories.first
-        }
-    }
-    
     func homekitSetup() {
         homeManager.delegate = homeManagerDelegate
         

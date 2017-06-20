@@ -21,13 +21,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" sceneName="Arbutus.dae" translatesAutoresizingMaskIntoConstraints="NO" id="xrK-Ft-bAf">
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" sceneName="Arbutus.dae" allowsCameraControl="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xrK-Ft-bAf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Nw0-Dj-vmb" appends="YES" id="OPv-Nk-ITo"/>
-                                    <outletCollection property="gestureRecognizers" destination="P4Q-15-1sT" appends="YES" id="q4R-gC-pQj"/>
                                     <outletCollection property="gestureRecognizers" destination="k7J-R5-ZaY" appends="YES" id="6NM-xY-6wr"/>
                                 </connections>
                             </sceneKitView>
@@ -61,69 +60,21 @@
                         <outlet property="backHomeButton" destination="FSU-R1-u5N" id="BmA-Yu-x0c"/>
                         <outlet property="sceneView" destination="xrK-Ft-bAf" id="ife-4Q-9Wd"/>
                         <outlet property="temperatureLabel" destination="02I-4O-sMV" id="E29-MR-icY"/>
-                        <segue destination="46z-nA-ZhY" kind="presentation" identifier="homekitUISegueID" modalPresentationStyle="overCurrentContext" id="Lh2-Nw-BBd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer enabled="NO" numberOfTapsRequired="2" id="k7J-R5-ZaY">
+                    <connections>
+                        <action selector="doubleTappedScene:" destination="BYZ-38-t0r" id="JCc-Sm-rXL"/>
+                    </connections>
+                </tapGestureRecognizer>
                 <tapGestureRecognizer id="Nw0-Dj-vmb">
                     <connections>
                         <action selector="tappedScene:" destination="BYZ-38-t0r" id="S9r-Pe-zAz"/>
                     </connections>
                 </tapGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="P4Q-15-1sT">
-                    <connections>
-                        <action selector="pan:" destination="BYZ-38-t0r" id="q75-Fi-hSP"/>
-                    </connections>
-                </panGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="k7J-R5-ZaY">
-                    <connections>
-                        <action selector="doubleTappedScene:" destination="BYZ-38-t0r" id="JCc-Sm-rXL"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
-        </scene>
-        <!--Home Kit View Controller-->
-        <scene sceneID="Rjm-3I-dpS">
-            <objects>
-                <viewController modalPresentationStyle="overCurrentContext" id="46z-nA-ZhY" customClass="HomeKitViewController" customModule="MyHouse" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="89E-y0-k9o"/>
-                        <viewControllerLayoutGuide type="bottom" id="Gg7-Li-e0M"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="NM8-iO-iBD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86F-1w-h0S">
-                                <rect key="frame" x="26" y="30" width="95" height="46"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="Dismiss"/>
-                                <connections>
-                                    <action selector="tappedButton:" destination="46z-nA-ZhY" eventType="touchUpInside" id="Qjj-Ta-MqK"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ol4-jr-rSn">
-                                <rect key="frame" x="271" y="31" width="78" height="45"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <state key="normal" title="Toggle"/>
-                                <connections>
-                                    <action selector="toggleButton:" destination="46z-nA-ZhY" eventType="touchUpInside" id="tG5-8R-srS"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="86F-1w-h0S" firstAttribute="top" secondItem="89E-y0-k9o" secondAttribute="bottom" constant="10" id="Lfg-pt-By6"/>
-                            <constraint firstItem="ol4-jr-rSn" firstAttribute="centerY" secondItem="86F-1w-h0S" secondAttribute="centerY" id="Ty4-rU-VrI"/>
-                            <constraint firstItem="86F-1w-h0S" firstAttribute="leading" secondItem="NM8-iO-iBD" secondAttribute="leadingMargin" constant="10" id="WTA-Rf-ULl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ol4-jr-rSn" secondAttribute="trailing" constant="10" id="thx-Ln-5sU"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bPw-g8-P9M" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1047" y="139"/>
         </scene>
     </scenes>
 </document>
