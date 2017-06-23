@@ -10,15 +10,21 @@ import Foundation
 import HomeKit
 
 class HomeController: NSObject {
-  
+    var home: Home?
+    
     let homeManager = HMHomeManager()
     var accessoryBrowser: HMAccessoryBrowser?
     let homeManagerDelegate = HomeManagerDelegate()
-
-    var temperatureClosure = { (temp: Float) in
-        print("The temperature is \(temp)")
+    
+    func lockDoor() {
+        home?.lock?.lockDoor()
     }
     
+    func unlockDoor() {
+        home?.lock?.unlockDoor()
+    }
+    
+    // Setup goes through all available devices to determine services and characteristics
     func homekitSetup() {
         homeManager.delegate = homeManagerDelegate
         
@@ -36,9 +42,10 @@ class HomeController: NSObject {
             })
         } else {
             print(" found some homes \(homeManager.homes)")
-            if let home = homeManager.primaryHome {
-                print("the accessories are \(home.accessories)")
-                for accessory in home.accessories {
+            if let homeObject = homeManager.primaryHome {
+                home = Home()
+                print("the accessories are \(homeObject.accessories)")
+                for accessory in homeObject.accessories {
                     print(" services for  \(accessory.name)")
                     for service in accessory.services {
                         print("  service \(service.name)")
@@ -47,52 +54,63 @@ class HomeController: NSObject {
                     for service in accessory.services {
                         print("  this service \(service.name) has characteristics")
                         for characteristic in service.characteristics {
-                            print("   characteristic \(characteristic.localizedDescription)")//\(characteristic.properties) \(characteristic.characteristicType)")
+                            print("   characteristic \(characteristic.localizedDescription)")//\(characteristic.properties) ")
+                            
+                            if service.name == "Light" && characteristic.localizedDescription == "Power State" {
+                                home?.light = Light(powerCharacteristic: characteristic)
+                            }
                             if characteristic.localizedDescription == "Current Temperature" {
-                                print("     Let's query the Current temperature asyncronously")
-                                // read the current temperature
-                                characteristic.readValue(completionHandler: { (error) in
-                                    if let error = error {
-                                        print("There was an error reading the value of the charactersitic \(error.localizedDescription)")
-                                    } else {
-                                        print("successfully read the temperature value \(String(describing: characteristic.value))")
-                                        if let temperature =  characteristic.value as? Float {
-                                            self.temperatureClosure(temperature)
-                                        }
-                                    }
-                                })
-                                
+                                print("      Current temperature type is \(characteristic.characteristicType)")
+                                home?.thermostat = Thermostat(thermostat: accessory, currentTemp: characteristic)
                             }
-                            
                             if characteristic.localizedDescription == "Lock Mechanism Current State" {
-                                // read the lock state
-                                characteristic.readValue(completionHandler: { (error) in
-                                    if let error = error {
-                                        print("There was an error reading the value of the charactersitic \(error.localizedDescription)")
-                                    } else {
-                                        print("successfully read the lock value \(String(describing: characteristic.value))")
-                                        
-                                        let lockChar = service.characteristics.filter({ (filterCharactersitic) -> Bool in
-                                            if (filterCharactersitic.localizedDescription == "Lock Mechanism Target State") {
-                                                return true
-                                            }
-                                            return false
-                                        }).first
-                                        lockChar?.writeValue(1, completionHandler: { (error) in
-                                            if let error = error {
-                                                print("error \(error)")
-                                            }
-                                        })
+                                print("      Current lock state mechanism type is \(characteristic.characteristicType)")
+                                
+                                // We now know that this is a lock, it has a characteristicType for modifying, let's find it
+                                let lockCharArray = service.characteristics.filter({ (filterCharactersitic) -> Bool in
+                                    if (filterCharactersitic.localizedDescription == "Lock Mechanism Target State") {
+                                        return true
                                     }
+                                    return false
                                 })
                                 
+                                guard let lockChar = lockCharArray.first else {
+                                    print("We did not get a set lock characteristic")
+                                    return
+                                }
+                                print("      Lock mechanism type is \(lockChar.characteristicType)")
+                                
+                                home?.lock = DoorLock(lock: accessory, readLockedCharacteristic: characteristic, setLockedCharacteristic: lockChar)
                             }
-                            
                         }
                     }
                 }
             }
         }
+    }
+}
+
+class Thermostat {
+    let accessory: HMAccessory
+    let currentTempCharacteristic: HMCharacteristic
+    init(thermostat: HMAccessory, currentTemp: HMCharacteristic) {
+        accessory = thermostat
+        currentTempCharacteristic = currentTemp
+    }
+    
+    func currentTemperature(fetchedTemperatureHandler: @escaping (Float) -> ()) {
+        print("hi")
+        currentTempCharacteristic.readValue(completionHandler: { (error) in
+            if let error = error {
+                print("There was an error reading the value of the charactersitic \(error.localizedDescription)")
+            } else {
+                print("successfully read the temperature value \(String(describing: self.currentTempCharacteristic.value))")
+                if let temperature =  self.currentTempCharacteristic.value as? NSNumber {
+                    let fahrenheit = temperature.floatValue * 1.8 + 32
+                    fetchedTemperatureHandler(fahrenheit)
+                }
+            }
+        })
     }
 }
 

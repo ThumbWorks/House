@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,13 +43,49 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7a0-wf-RFe">
+                                <rect key="frame" x="329" y="629" width="30" height="30"/>
+                                <state key="normal" title="lock"/>
+                                <connections>
+                                    <action selector="lock:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oxS-Wy-WiD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3w6-kH-Dnw">
+                                <rect key="frame" x="313" y="591" width="46" height="30"/>
+                                <state key="normal" title="unlock"/>
+                                <connections>
+                                    <action selector="unlock:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zve-mH-Ium"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TW4-ya-v24">
+                                <rect key="frame" x="232" y="629" width="61" height="30"/>
+                                <state key="normal" title="Light Off"/>
+                                <connections>
+                                    <action selector="lightOff:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bdc-fa-0vs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXi-2g-HT8">
+                                <rect key="frame" x="239" y="591" width="54" height="30"/>
+                                <state key="normal" title="light On"/>
+                                <connections>
+                                    <action selector="lightOn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IQw-hk-vtD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="FSU-R1-u5N" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-6" id="46E-1B-Ahz"/>
+                            <constraint firstItem="7a0-wf-RFe" firstAttribute="top" secondItem="3w6-kH-Dnw" secondAttribute="bottom" constant="8" id="7Py-nj-Uwy"/>
+                            <constraint firstItem="TW4-ya-v24" firstAttribute="trailing" secondItem="pXi-2g-HT8" secondAttribute="trailing" id="8cH-Bl-D0n"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7a0-wf-RFe" secondAttribute="bottom" constant="8" id="BBn-8K-M1z"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xrK-Ft-bAf" secondAttribute="trailing" constant="-16" id="Dog-H4-NHp"/>
+                            <constraint firstItem="TW4-ya-v24" firstAttribute="top" secondItem="pXi-2g-HT8" secondAttribute="bottom" constant="8" id="E7j-oR-QX8"/>
+                            <constraint firstItem="3w6-kH-Dnw" firstAttribute="leading" secondItem="pXi-2g-HT8" secondAttribute="trailing" constant="20" id="Ic3-JC-obD"/>
+                            <constraint firstItem="TW4-ya-v24" firstAttribute="centerY" secondItem="7a0-wf-RFe" secondAttribute="centerY" id="KuI-XX-UkT"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="02I-4O-sMV" secondAttribute="bottom" constant="8" id="MCm-Xe-Pwz"/>
+                            <constraint firstAttribute="trailing" secondItem="3w6-kH-Dnw" secondAttribute="trailing" constant="16" id="UKH-Fj-vZb"/>
                             <constraint firstItem="xrK-Ft-bAf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ZdX-oQ-Tbv"/>
+                            <constraint firstAttribute="trailing" secondItem="7a0-wf-RFe" secondAttribute="trailing" constant="16" id="j76-3D-7jh"/>
                             <constraint firstItem="FSU-R1-u5N" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="lkn-Y4-4H8"/>
                             <constraint firstItem="02I-4O-sMV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-6" id="mUd-vq-fdR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xrK-Ft-bAf" secondAttribute="bottom" id="t1R-aO-MbG"/>
