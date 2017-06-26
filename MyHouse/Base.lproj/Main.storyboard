@@ -27,7 +27,6 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Nw0-Dj-vmb" appends="YES" id="OPv-Nk-ITo"/>
-                                    <outletCollection property="gestureRecognizers" destination="k7J-R5-ZaY" appends="YES" id="6NM-xY-6wr"/>
                                 </connections>
                             </sceneKitView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSU-R1-u5N">
@@ -99,11 +98,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer enabled="NO" numberOfTapsRequired="2" id="k7J-R5-ZaY">
-                    <connections>
-                        <action selector="doubleTappedScene:" destination="BYZ-38-t0r" id="JCc-Sm-rXL"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <tapGestureRecognizer id="Nw0-Dj-vmb">
                     <connections>
                         <action selector="tappedScene:" destination="BYZ-38-t0r" id="S9r-Pe-zAz"/>
