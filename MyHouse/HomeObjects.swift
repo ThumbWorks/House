@@ -22,8 +22,27 @@ enum LockState {
     case Unknown
 }
 
-class DoorLock {
+class DoorLock: NSObject {
     
+    func lockState() -> LockState {
+        guard let state = self.readLockCharacteristic.value as? Int else {
+            print("unclear what we got for lock value")
+            return .Unknown
+        }
+        switch state {
+        case HMCharacteristicValueLockMechanismState.jammed.rawValue:
+            return .Jammed
+        case HMCharacteristicValueLockMechanismState.secured.rawValue:
+            return .Locked
+        case HMCharacteristicValueLockMechanismState.unknown.rawValue:
+            return .Unknown
+        case HMCharacteristicValueLockMechanismState.unsecured.rawValue:
+            return .Unlocked
+        default:
+            print("unknown state for the Lock characteristic")
+            return .Unknown
+        }
+    }
     let accessory: HMAccessory
     let readLockCharacteristic: HMCharacteristic
     let setLockCharacteristic: HMCharacteristic
@@ -31,10 +50,30 @@ class DoorLock {
         accessory = lock
         readLockCharacteristic = readLockedCharacteristic
         setLockCharacteristic = setLockedCharacteristic
+        
+    }
+    
+    func enableNotifications() {
+        readLockCharacteristic.enableNotification(true) { (error) in
+            if let error = error {
+                print("FAIL: There was an error with enabling notifications for read lock changes \(error.localizedDescription)")
+            } else {
+                print("SUCCESS: read lock notification set up properly")
+            }
+        }
+        
+        setLockCharacteristic.enableNotification(true) { (error) in
+            if let error = error {
+                print("FAIL: There was an error with enabling notifications for set lock changes \(error.localizedDescription)")
+            } else {
+                print("SUCCESS: set lock notification set up properly")
+            }
+        }
     }
     
     func isLocked(lockCheckHandler: @escaping (LockState) -> ()) {
         // read the lock state
+        // TODO it's possible that we don't need to re-read the values if the characteristic is updated
         readLockCharacteristic.readValue(completionHandler: { (error) in
             if let error = error {
                 print("There was an error reading the value of the charactersitic \(error.localizedDescription)")
@@ -58,6 +97,7 @@ class DoorLock {
                     print("unknown state for the Lock characteristic")
                 }
             }
+            self.enableNotifications()
         })
     }
     
@@ -82,11 +122,67 @@ class DoorLock {
     }
 }
 
-class Light {
+class Thermostat: NSObject {
+    let accessory: HMAccessory
+    let currentTempCharacteristic: HMCharacteristic
+    init(thermostat: HMAccessory, currentTemp: HMCharacteristic) {
+        accessory = thermostat
+        currentTempCharacteristic = currentTemp
+    }
+    
+    func enableNotifications() {
+        if !currentTempCharacteristic.isNotificationEnabled {
+            // Set up notifications for changes in current temperature
+            currentTempCharacteristic.enableNotification(true) { (error) in
+                if let error = error {
+                    print("FAIL: There was an error with enabling notifications for temperature changes \(error.localizedDescription)")
+                } else {
+                    print("SUCCESS: current temperature notification set up properly")
+                }
+            }
+        }
+    }
+    
+    func temperature() -> NSNumber {
+        if let temperature =  self.currentTempCharacteristic.value as? NSNumber {
+            return temperature
+        }
+        return 0
+    }
+    
+    func currentTemperature(fetchedTemperatureHandler: @escaping (Float) -> ()) {
+        currentTempCharacteristic.readValue(completionHandler: { (error) in
+            if let error = error {
+                print("There was an error reading the temperature value \(error.localizedDescription)")
+            } else {
+                print("successfully read the temperature value \(String(describing: self.currentTempCharacteristic.value))")
+                if let temperature =  self.currentTempCharacteristic.value as? NSNumber {
+                    let fahrenheit = temperature.floatValue * 1.8 + 32
+                    fetchedTemperatureHandler(fahrenheit)
+                }
+            }
+            self.enableNotifications()
+        })
+    }
+}
+
+class Light: NSObject {
     let characteristic: HMCharacteristic
     
-    init(powerCharacteristic: HMCharacteristic) {
-        characteristic = powerCharacteristic
+    init(lightCharacteristic: HMCharacteristic) {
+        characteristic = lightCharacteristic
+    }
+    
+    func enableNotifications() {
+        if !characteristic.isNotificationEnabled {
+            characteristic.enableNotification(true) { (error) in
+                if let error = error {
+                    print("FAIL: There was an error with enabling notifications for light changes \(error.localizedDescription)")
+                } else {
+                    print("SUCCESS: current light notification set up properly")
+                }
+            }
+        }
     }
     
     func turnOnLight() {
@@ -96,12 +192,15 @@ class Light {
             }
         }
     }
-    
     func turnOffLight() {
         characteristic.writeValue(0) { (error) in
             if let error = error {
                 print("error \(error)")
             }
         }
+    }
+    func isOn() -> Bool {
+        enableNotifications()
+        return characteristic.value as! Bool
     }
 }

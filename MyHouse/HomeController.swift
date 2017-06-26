@@ -8,23 +8,46 @@
 
 import Foundation
 import HomeKit
+extension HomeController: HMAccessoryDelegate {
+    func accessory(_ accessory: HMAccessory, service: HMService, didUpdateValueFor characteristic: HMCharacteristic) {
+        print("an accessory updated")
+        if characteristic == home?.lock?.setLockCharacteristic {
+            print("the door lock changed")
+            if let locked = home?.lock?.lockState(), let closure = lockUpdate {
+                closure(locked)
+            }
+        }
+        else if characteristic == home?.light?.characteristic {
+            print("light changed \(String(describing: home?.light?.isOn()))")
+            if let lightOn = home?.light?.isOn(), let closure = lightUpdate {
+                closure(lightOn)
+            }
+        }
+        else if characteristic == home?.thermostat?.currentTempCharacteristic {
+            if let temperature = home?.thermostat?.temperature(), let closure = temperatureUpdate {
+                print("Thermostat changed \(temperature)")
+                closure(temperature)
+            }
+        }
+        else {
+            print("An untracked accessory changed state: Accessory: \(accessory). Service: \(service). Characteristic: \(characteristic), ")
+        }
+    }
+}
 
 class HomeController: NSObject {
     var home: Home?
     
     let homeManager = HMHomeManager()
-    var accessoryBrowser: HMAccessoryBrowser?
     let homeManagerDelegate = HomeManagerDelegate()
     
-    func lockDoor() {
-        home?.lock?.lockDoor()
-    }
+    // closures
+    var temperatureUpdate: ((NSNumber) -> Void)?
+    var lockUpdate: ((LockState) -> Void)?
+    var lightUpdate: ((Bool) -> Void)?
     
-    func unlockDoor() {
-        home?.lock?.unlockDoor()
-    }
-    
-    // Setup goes through all available devices to determine services and characteristics
+    // Setup goes through all available devices to determine services and characteristics then stores references
+    // in this HomeController instance
     func homekitSetup() {
         homeManager.delegate = homeManagerDelegate
         
@@ -52,12 +75,15 @@ class HomeController: NSObject {
                     }
                     print("\n\n")
                     for service in accessory.services {
+                        // blindly set all accessory delegates to self, we can filter when we get the notifications
+                        accessory.delegate = self
+                        
                         print("  this service \(service.name) has characteristics")
                         for characteristic in service.characteristics {
                             print("   characteristic \(characteristic.localizedDescription)")//\(characteristic.properties) ")
                             
-                            if service.name == "Light" && characteristic.localizedDescription == "Power State" {
-                                home?.light = Light(powerCharacteristic: characteristic)
+                            if service.name == "Patio Light" && characteristic.localizedDescription == "Power State" {
+                                home?.light =  Light(lightCharacteristic: characteristic)
                             }
                             if characteristic.localizedDescription == "Current Temperature" {
                                 print("      Current temperature type is \(characteristic.characteristicType)")
@@ -79,8 +105,8 @@ class HomeController: NSObject {
                                     return
                                 }
                                 print("      Lock mechanism type is \(lockChar.characteristicType)")
-                                
                                 home?.lock = DoorLock(lock: accessory, readLockedCharacteristic: characteristic, setLockedCharacteristic: lockChar)
+                                home?.lock?.enableNotifications()
                             }
                         }
                     }
@@ -90,35 +116,20 @@ class HomeController: NSObject {
     }
 }
 
-class Thermostat {
-    let accessory: HMAccessory
-    let currentTempCharacteristic: HMCharacteristic
-    init(thermostat: HMAccessory, currentTemp: HMCharacteristic) {
-        accessory = thermostat
-        currentTempCharacteristic = currentTemp
+extension HomeController {
+    func turnOnLight() {
+        home?.light?.turnOnLight()
     }
     
-    func currentTemperature(fetchedTemperatureHandler: @escaping (Float) -> ()) {
-        print("hi")
-        currentTempCharacteristic.readValue(completionHandler: { (error) in
-            if let error = error {
-                print("There was an error reading the value of the charactersitic \(error.localizedDescription)")
-            } else {
-                print("successfully read the temperature value \(String(describing: self.currentTempCharacteristic.value))")
-                if let temperature =  self.currentTempCharacteristic.value as? NSNumber {
-                    let fahrenheit = temperature.floatValue * 1.8 + 32
-                    fetchedTemperatureHandler(fahrenheit)
-                }
-            }
-        })
+    func turnOffLight() {
+        home?.light?.turnOffLight()
     }
-}
-
-extension HomeController: HMAccessoryBrowserDelegate {
-    func accessoryBrowser(_ browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
-        print("found this one \(accessory)")
-        homeManager.primaryHome?.addAccessory(accessory, completionHandler: { (error) in
-            print("error adding accessory \(String(describing: error))")
-        })
+    
+    func lockDoor() {
+        home?.lock?.lockDoor()
+    }
+    
+    func unlockDoor() {
+        home?.lock?.unlockDoor()
     }
 }
