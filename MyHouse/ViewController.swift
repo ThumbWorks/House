@@ -11,6 +11,7 @@ import SceneKit
 
 class ViewController: UIViewController {
     
+    var patioLights = [SCNNode]()
     let homeController = HomeController()
     
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -72,6 +73,30 @@ class ViewController: UIViewController {
         SCNTransaction.commit()
     }
     
+    func updateUnderCabinetLight() {
+        
+        // Find all of the lightbulbs from the string light model
+        if let lightNodes = sceneView.scene?.rootNode.childNodes(passingTest: { (node, theBool) -> Bool in
+            node.name == "V-Ray_Omni_Light"
+        }) {
+            
+            // for each one
+            for lightNode in lightNodes {
+                // add a yellow light intensity 20,
+                let light = SCNLight()
+                light.type = .omni
+                light.color = UIColor.yellow
+//                light.castsShadow = true
+                light.intensity = 20
+//                light.shadowColor = UIColor.gray.withAlphaComponent(0.5)
+                lightNode.light = light
+                
+                // add it to the patioLights array for later manipulation
+                patioLights.append(lightNode)
+            }
+        }
+    }
+    
     func addLight(_ position: SCNVector3, color: UIColor) {
         // lights
         let ambient = SCNLight()
@@ -79,6 +104,7 @@ class ViewController: UIViewController {
         ambient.intensity = 200
         ambient.color = color.withAlphaComponent(0.4)
         ambient.shadowColor = UIColor.gray.withAlphaComponent(0.5)
+        ambient.castsShadow = true
         
         let lightNode = SCNNode()
         lightNode.position = position
@@ -111,10 +137,14 @@ class ViewController: UIViewController {
         sceneView.pointOfView = cameraNode
         
         cameraNode.position = SCNVector3Make(Float(400), Float(-1000), Float(900))
-        let node = scene.rootNode.childNode(withName: "ID2633", recursively: true)
+        let node = scene.rootNode.childNode(withName: "ID3685", recursively: true)
         
         let lookat = SCNLookAtConstraint(target: node)
         cameraNode.constraints = [lookat]
+        
+        let cameraSpot = SCNLight()
+        cameraSpot.type = .spot
+        cameraSpot.intensity = 1000
         
         let cameraController = sceneView.defaultCameraController
         cameraController.interactionMode = .orbitTurntable        
@@ -127,36 +157,64 @@ class ViewController: UIViewController {
         sceneView.showsStatistics = true
         
         homeController.homekitSetup()
+        homeController.lockUpdate = { (lockState) in
+            print("view controller sees the door was locked or not \(lockState)")
+            self.text.string = "\(lockState)"
+        }
+        homeController.lightUpdate = { (on) in
+            print("view controller sees light on or not \(on)")
+        }
+        homeController.temperatureUpdate = { (temp) in
+            self.temperatureLabel.text = "Internal Temperature: \(temp)"
+        }
         if let home = homeController.home {
             home.thermostat?.currentTemperature(fetchedTemperatureHandler: { (temp) in
                 self.temperatureLabel.text = "Internal Temperature: \(temp)"
                 self.temperatureLabel.isHidden = false
             })
-            home.lock?.isLocked(lockCheckHandler: { (locked) in
-                print("The lock is \(locked)")
-            })
-            
-            home.light?.turnOnLight()
+            if let state = home.lock?.lockState() {
+                print("the lock is \(state)")
+            }
         }
+        
+        updateUnderCabinetLight()
     }
 }
 
 // IBActions
 extension ViewController {
     @IBAction func lightOn(_ sender: UIButton) {
-        homeController.home?.light?.turnOnLight()
+        homeController.turnOnLight()
+        patioLights.forEach { (node) in
+            print("augment the light ")
+            node.light?.intensity = 20
+            if let materials = node.geometry?.materials {
+                for material in materials {
+                    print("material of this light \(material)")
+                    material.emission.contents = UIColor.yellow
+                }
+            }
+        }
     }
     
     @IBAction func lightOff(_ sender: UIButton) {
-        homeController.home?.light?.turnOffLight()
+        homeController.turnOffLight()
+        patioLights.forEach { (node) in
+            node.light?.intensity = 0
+            if let materials = node.geometry?.materials {
+                for material in materials {
+                    material.emission.contents = UIColor.black
+                }
+            }
+        }
     }
     
     @IBAction func lock(_ sender: UIButton) {
-        homeController.home?.lock?.lockDoor()
+        homeController.lockDoor()
     }
     
     @IBAction func unlock(_ sender: UIButton) {
-        homeController.home?.lock?.unlockDoor()
+        homeController.unlockDoor()
     }
     
     @IBAction func showHouse(_ sender: UIButton) {
@@ -190,6 +248,7 @@ extension ViewController {
                         print("zombie dimensions \(result.worldCoordinates)")
                         zombie.position = result.worldCoordinates
                         sceneView.scene?.rootNode.addChildNode(zombie)
+                        return
                     }
                 }
             }
@@ -258,8 +317,8 @@ extension ViewController {
 }
 
 extension SCNGeometry {
-    // set up our SCNBox which will hold the camera
-    func createBoxGeometry() -> SCNGeometry {
+    // set up our SCNBox which we can use for debugging
+    class func createBoxGeometry() -> SCNGeometry {
         
         // create the colors
         let green = SCNMaterial()
@@ -281,8 +340,19 @@ extension SCNGeometry {
         yellow.diffuse.contents = UIColor.yellow.withAlphaComponent(0.5)
         
         // Now create the geometry and set the colors
-        let geometry = SCNBox(width: 60, height: 60, length: 60, chamferRadius: 4.0)
+        let geometry = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 5.0)
         geometry.materials = [green, orange, purple, blue, yellow, red]
+        return geometry
+    }
+    
+    class func createGlobeLightGeometry() -> SCNGeometry {
+        let yellow = SCNMaterial()
+        yellow.diffuse.contents = UIColor.yellow
+        yellow.emission.contents = UIColor.yellow
+        
+        // Now create the geometry and set the color
+        let geometry = SCNSphere(radius: 5)
+        geometry.materials = [yellow]
         return geometry
     }
 }

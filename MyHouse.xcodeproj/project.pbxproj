@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F04AC061EF8FE020091001F /* Arbutus.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F04ABEC1EF8FDFD0091001F /* Arbutus.dae */; };
+		5F04097D1F00E32300BDC7F4 /* Arbutus.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F04097C1F00E2E800BDC7F4 /* Arbutus.dae */; };
 		5F04AC071EF8FE020091001F /* __Metal_Aluminum_Anodized_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F04ABEE1EF8FDFD0091001F /* __Metal_Aluminum_Anodized_1.jpg */; };
 		5F04AC081EF8FE020091001F /* __Metal_Aluminum_Anodized_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F04ABEF1EF8FDFD0091001F /* __Metal_Aluminum_Anodized_8.jpg */; };
 		5F04AC091EF8FE020091001F /* __Metal_Corrogated_Shiny_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F04ABF01EF8FDFD0091001F /* __Metal_Corrogated_Shiny_1.jpg */; };
@@ -32,6 +32,7 @@
 		5F04AC1C1EF8FE020091001F /* Vegetation_Honey_Locust.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F04AC031EF8FDFD0091001F /* Vegetation_Honey_Locust.jpg */; };
 		5F04AC1D1EF8FE020091001F /* Wood_Floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F04AC041EF8FDFD0091001F /* Wood_Floor.jpg */; };
 		5F04AC1E1EF8FE020091001F /* Wood_Floor_Dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F04AC051EF8FDFD0091001F /* Wood_Floor_Dark.jpg */; };
+		5F04AC201EF9852D0091001F /* Switch.scn in Resources */ = {isa = PBXBuildFile; fileRef = 5F04AC1F1EF9852D0091001F /* Switch.scn */; };
 		5F0503EB1EC57534003CD0E8 /* walking3.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EA1EC57534003CD0E8 /* walking3.dae */; };
 		5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */ = {isa = PBXBuildFile; fileRef = 5F0503EE1EC580DA003CD0E8 /* walking.dae */; };
 		5F1944F91EE4B441003510A2 /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F1944F81EE4B441003510A2 /* HomeKit.framework */; };
@@ -42,6 +43,7 @@
 		5F3966841EB024BD003A0A8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966821EB024BD003A0A8E /* Main.storyboard */; };
 		5F3966861EB024BD003A0A8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966851EB024BD003A0A8E /* Assets.xcassets */; };
 		5F3966891EB024BD003A0A8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3966871EB024BD003A0A8E /* LaunchScreen.storyboard */; };
+		5F3C74F61EFCF861004FBFF0 /* HomeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3C74F51EFCF861004FBFF0 /* HomeObjects.swift */; };
 		5F5C29B11ECE00660046D41F /* HomeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C29B01ECE00660046D41F /* HomeDelegate.swift */; };
 		5F5C29B31ECE008D0046D41F /* HomeManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */; };
 		5FBAF9601EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5FBAF95F1EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg */; };
@@ -51,7 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5F04ABEC1EF8FDFD0091001F /* Arbutus.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = Arbutus.dae; path = ../../../../Desktop/Arbutus.dae; sourceTree = "<group>"; };
+		5F04097C1F00E2E800BDC7F4 /* Arbutus.dae */ = {isa = PBXFileReference; lastKnownFileType = text.xml.dae; name = Arbutus.dae; path = MyHouse/Arbutus.dae; sourceTree = SOURCE_ROOT; };
 		5F04ABEE1EF8FDFD0091001F /* __Metal_Aluminum_Anodized_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = __Metal_Aluminum_Anodized_1.jpg; sourceTree = "<group>"; };
 		5F04ABEF1EF8FDFD0091001F /* __Metal_Aluminum_Anodized_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = __Metal_Aluminum_Anodized_8.jpg; sourceTree = "<group>"; };
 		5F04ABF01EF8FDFD0091001F /* __Metal_Corrogated_Shiny_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = __Metal_Corrogated_Shiny_1.jpg; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 		5F04AC031EF8FDFD0091001F /* Vegetation_Honey_Locust.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Vegetation_Honey_Locust.jpg; sourceTree = "<group>"; };
 		5F04AC041EF8FDFD0091001F /* Wood_Floor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Wood_Floor.jpg; sourceTree = "<group>"; };
 		5F04AC051EF8FDFD0091001F /* Wood_Floor_Dark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Wood_Floor_Dark.jpg; sourceTree = "<group>"; };
+		5F04AC1F1EF9852D0091001F /* Switch.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Switch.scn; sourceTree = "<group>"; };
 		5F0503EA1EC57534003CD0E8 /* walking3.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking3.dae; sourceTree = "<group>"; };
 		5F0503EE1EC580DA003CD0E8 /* walking.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = walking.dae; sourceTree = "<group>"; };
 		5F1944F81EE4B441003510A2 /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
@@ -88,6 +91,7 @@
 		5F3966851EB024BD003A0A8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F3966881EB024BD003A0A8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F39668A1EB024BD003A0A8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F3C74F51EFCF861004FBFF0 /* HomeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeObjects.swift; sourceTree = "<group>"; };
 		5F5C29B01ECE00660046D41F /* HomeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDelegate.swift; sourceTree = "<group>"; };
 		5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeManagerDelegate.swift; sourceTree = "<group>"; };
 		5F7839171EB45A36002410EB /* MyHouse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyHouse.entitlements; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 		5F04ABED1EF8FDFD0091001F /* Arbutus */ = {
 			isa = PBXGroup;
 			children = (
+				5F04097C1F00E2E800BDC7F4 /* Arbutus.dae */,
 				5F04ABEE1EF8FDFD0091001F /* __Metal_Aluminum_Anodized_1.jpg */,
 				5F04ABEF1EF8FDFD0091001F /* __Metal_Aluminum_Anodized_8.jpg */,
 				5F04ABF01EF8FDFD0091001F /* __Metal_Corrogated_Shiny_1.jpg */,
@@ -171,13 +176,13 @@
 				5FEEF3341EC65A5500664803 /* Logan.dae */,
 				5FEEF3361EC65B0E00664803 /* Logan-Run.dae */,
 				5FBAF95F1EE8B5DA00FAA54B /* Tile_Limestone_Multi.jpg */,
-				5F04ABEC1EF8FDFD0091001F /* Arbutus.dae */,
 				5F04ABED1EF8FDFD0091001F /* Arbutus */,
 				5F24C4491EC56C8200A97F01 /* art.scnassets */,
 				5F3966851EB024BD003A0A8E /* Assets.xcassets */,
 				5F3966871EB024BD003A0A8E /* LaunchScreen.storyboard */,
 				5F39668A1EB024BD003A0A8E /* Info.plist */,
 				5F38329E1EEB16FC00CA4F7F /* Thermostat.sks */,
+				5F04AC1F1EF9852D0091001F /* Switch.scn */,
 			);
 			path = MyHouse;
 			sourceTree = "<group>";
@@ -185,6 +190,7 @@
 		5F5C29AF1ECE003B0046D41F /* HomeKitManagers */ = {
 			isa = PBXGroup;
 			children = (
+				5F3C74F51EFCF861004FBFF0 /* HomeObjects.swift */,
 				5F5C29B01ECE00660046D41F /* HomeDelegate.swift */,
 				5F5C29B21ECE008D0046D41F /* HomeManagerDelegate.swift */,
 				5FF9789E1ED5186200AC0733 /* HomeController.swift */,
@@ -271,6 +277,7 @@
 				5F04AC1B1EF8FE020091001F /* Translucent_Glass_Safety.jpg in Resources */,
 				5F3966891EB024BD003A0A8E /* LaunchScreen.storyboard in Resources */,
 				5F24C44A1EC56C8200A97F01 /* art.scnassets in Resources */,
+				5F04AC201EF9852D0091001F /* Switch.scn in Resources */,
 				5F04AC131EF8FE020091001F /* Groundcover_Gravel_Indian.jpg in Resources */,
 				5F04AC161EF8FE020091001F /* Slate_Light_Tile.jpg in Resources */,
 				5F04AC151EF8FE020091001F /* Metal_Corrogated_Shiny.jpg in Resources */,
@@ -290,10 +297,10 @@
 				5F04AC101EF8FE020091001F /* Cladding_Stucco_White.jpg in Resources */,
 				5F0503EF1EC580DA003CD0E8 /* walking.dae in Resources */,
 				5F04AC181EF8FE020091001F /* Stainless_Steel_1.jpg in Resources */,
-				5F04AC061EF8FE020091001F /* Arbutus.dae in Resources */,
 				5F04AC191EF8FE020091001F /* Stainless_Steel_2.jpg in Resources */,
 				5F04AC171EF8FE020091001F /* Stainless_Steel.jpg in Resources */,
 				5F04AC0D1EF8FE020091001F /* __Metal_Corrogated_Shiny_3.jpg in Resources */,
+				5F04097D1F00E32300BDC7F4 /* Arbutus.dae in Resources */,
 				5F04AC121EF8FE020091001F /* Grass_Dark_Green.jpg in Resources */,
 				5F0503EB1EC57534003CD0E8 /* walking3.dae in Resources */,
 				5F04AC091EF8FE020091001F /* __Metal_Corrogated_Shiny_1.jpg in Resources */,
@@ -311,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F3966811EB024BD003A0A8E /* ViewController.swift in Sources */,
+				5F3C74F61EFCF861004FBFF0 /* HomeObjects.swift in Sources */,
 				5F39667F1EB024BC003A0A8E /* AppDelegate.swift in Sources */,
 				5FF9789F1ED5186200AC0733 /* HomeController.swift in Sources */,
 				5F5C29B31ECE008D0046D41F /* HomeManagerDelegate.swift in Sources */,
