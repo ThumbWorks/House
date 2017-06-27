@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         SCNTransaction.commit()
     }
     
-    func updateUnderCabinetLight() {
+    func createPatioLighting() {
         
         // Find all of the lightbulbs from the string light model
         if let lightNodes = sceneView.scene?.rootNode.childNodes(passingTest: { (node, theBool) -> Bool in
@@ -86,14 +86,15 @@ class ViewController: UIViewController {
                 let light = SCNLight()
                 light.type = .omni
                 light.color = UIColor.yellow
-//                light.castsShadow = true
-                light.intensity = 20
-//                light.shadowColor = UIColor.gray.withAlphaComponent(0.5)
+                light.intensity = 0
                 lightNode.light = light
                 
                 // add it to the patioLights array for later manipulation
                 patioLights.append(lightNode)
             }
+            homeController.home?.light?.isOn(lightCheckHandler: { (lightState) in
+                self.updateLights(toState: lightState)
+            })
         }
     }
     
@@ -147,8 +148,7 @@ class ViewController: UIViewController {
         cameraSpot.intensity = 1000
         
         let cameraController = sceneView.defaultCameraController
-        cameraController.interactionMode = .orbitTurntable        
-        
+        cameraController.interactionMode = .orbitTurntable
     }
     
     override func viewDidLoad() {
@@ -158,55 +158,49 @@ class ViewController: UIViewController {
         
         homeController.homekitSetup()
         homeController.lockUpdate = { (lockState) in
-            print("view controller sees the door was locked or not \(lockState)")
+            print("view controller sees the door was \(lockState)")
             self.text.string = "\(lockState)"
         }
+        homeController.home?.light?.enableNotifications()
         homeController.lightUpdate = { (on) in
             print("view controller sees light on or not \(on)")
+            self.updateLights(toState: on)
         }
         homeController.temperatureUpdate = { (temp) in
-            self.temperatureLabel.text = "Internal Temperature: \(temp)"
+            self.temperatureLabel.text = "Internal Temperature (updated): \(temp)"
         }
         if let home = homeController.home {
             home.thermostat?.currentTemperature(fetchedTemperatureHandler: { (temp) in
-                self.temperatureLabel.text = "Internal Temperature: \(temp)"
+                self.temperatureLabel.text = "Internal Temperature (original): \(temp)"
                 self.temperatureLabel.isHidden = false
             })
-            if let state = home.lock?.lockState() {
-                print("the lock is \(state)")
-            }
+            home.lock?.isLocked(lockCheckHandler: { (lockState) in
+                print("the lock is \(lockState)")
+            })
         }
-        
-        updateUnderCabinetLight()
+        createPatioLighting()
     }
 }
 
 // IBActions
 extension ViewController {
-    @IBAction func lightOn(_ sender: UIButton) {
-        homeController.turnOnLight()
+    func updateLights(toState : Bool) {
         patioLights.forEach { (node) in
-            print("augment the light ")
-            node.light?.intensity = 20
+            node.light?.intensity = toState ? 20 : 0
             if let materials = node.geometry?.materials {
                 for material in materials {
-                    print("material of this light \(material)")
-                    material.emission.contents = UIColor.yellow
+                    material.emission.contents = toState ? UIColor.yellow : UIColor.black
                 }
             }
         }
     }
     
+    @IBAction func lightOn(_ sender: UIButton) {
+        homeController.turnOnLight()
+    }
+    
     @IBAction func lightOff(_ sender: UIButton) {
         homeController.turnOffLight()
-        patioLights.forEach { (node) in
-            node.light?.intensity = 0
-            if let materials = node.geometry?.materials {
-                for material in materials {
-                    material.emission.contents = UIColor.black
-                }
-            }
-        }
     }
     
     @IBAction func lock(_ sender: UIButton) {

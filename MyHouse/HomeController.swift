@@ -11,26 +11,36 @@ import HomeKit
 extension HomeController: HMAccessoryDelegate {
     func accessory(_ accessory: HMAccessory, service: HMService, didUpdateValueFor characteristic: HMCharacteristic) {
         print("an accessory updated")
-        if characteristic == home?.lock?.setLockCharacteristic {
+        let lock = home?.lock
+        let light = home?.light
+        let thermostat = home?.thermostat
+        if characteristic == lock?.setLockCharacteristic {
             print("the door lock changed")
-            if let locked = home?.lock?.lockState(), let closure = lockUpdate {
-                closure(locked)
+            guard let closure = lockUpdate else {
+                print("no lock closure defined")
+                return
             }
+            lock?.isLocked(lockCheckHandler: { (lockState) in
+                closure(lockState)
+            })
         }
-        else if characteristic == home?.light?.characteristic {
-            print("light changed \(String(describing: home?.light?.isOn()))")
-            if let lightOn = home?.light?.isOn(), let closure = lightUpdate {
-                closure(lightOn)
+        else if characteristic == light?.characteristic {
+            guard let closure = lightUpdate else {
+                print("no light closure defined")
+                return
             }
+            light?.isOn(lightCheckHandler: { (isOn) in
+                closure(isOn)
+            })
         }
-        else if characteristic == home?.thermostat?.currentTempCharacteristic {
-            if let temperature = home?.thermostat?.temperature(), let closure = temperatureUpdate {
+        else if characteristic == thermostat?.currentTempCharacteristic {
+            if let temperature = thermostat?.temperature(), let closure = temperatureUpdate {
                 print("Thermostat changed \(temperature)")
-                closure(temperature)
+                closure(temperature.celsiusToFarenheit())
             }
         }
         else {
-            print("An untracked accessory changed state: Accessory: \(accessory). Service: \(service). Characteristic: \(characteristic), ")
+            print("An untracked accessory changed state: Accessory: \(accessory). Service: \(service). Characteristic: \(characteristic), \(characteristic.localizedDescription)")
         }
     }
 }
@@ -42,7 +52,7 @@ class HomeController: NSObject {
     let homeManagerDelegate = HomeManagerDelegate()
     
     // closures
-    var temperatureUpdate: ((NSNumber) -> Void)?
+    var temperatureUpdate: ((Float) -> Void)?
     var lockUpdate: ((LockState) -> Void)?
     var lightUpdate: ((Bool) -> Void)?
     
@@ -118,11 +128,20 @@ class HomeController: NSObject {
 
 extension HomeController {
     func turnOnLight() {
-        home?.light?.turnOnLight()
+        home?.light?.turnOnLight(lightHandler: { (success) in
+            if let lightUpdate = self.lightUpdate {
+                lightUpdate(success)
+            }
+        })
     }
     
     func turnOffLight() {
-        home?.light?.turnOffLight()
+        home?.light?.turnOffLight(lightHandler: { (success) in
+            if let lightUpdate = self.lightUpdate {
+                // If this fails, send back a YES because we want to keep the lights on
+                lightUpdate(!success)
+            }
+        })
     }
     
     func lockDoor() {

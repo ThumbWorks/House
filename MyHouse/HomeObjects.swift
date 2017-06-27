@@ -24,25 +24,6 @@ enum LockState {
 
 class DoorLock: NSObject {
     
-    func lockState() -> LockState {
-        guard let state = self.readLockCharacteristic.value as? Int else {
-            print("unclear what we got for lock value")
-            return .Unknown
-        }
-        switch state {
-        case HMCharacteristicValueLockMechanismState.jammed.rawValue:
-            return .Jammed
-        case HMCharacteristicValueLockMechanismState.secured.rawValue:
-            return .Locked
-        case HMCharacteristicValueLockMechanismState.unknown.rawValue:
-            return .Unknown
-        case HMCharacteristicValueLockMechanismState.unsecured.rawValue:
-            return .Unlocked
-        default:
-            print("unknown state for the Lock characteristic")
-            return .Unknown
-        }
-    }
     let accessory: HMAccessory
     let readLockCharacteristic: HMCharacteristic
     let setLockCharacteristic: HMCharacteristic
@@ -157,12 +138,17 @@ class Thermostat: NSObject {
             } else {
                 print("successfully read the temperature value \(String(describing: self.currentTempCharacteristic.value))")
                 if let temperature =  self.currentTempCharacteristic.value as? NSNumber {
-                    let fahrenheit = temperature.floatValue * 1.8 + 32
-                    fetchedTemperatureHandler(fahrenheit)
+                    fetchedTemperatureHandler(temperature.celsiusToFarenheit())
                 }
             }
             self.enableNotifications()
         })
+    }
+}
+
+extension NSNumber {
+    func celsiusToFarenheit() -> Float {
+        return self.floatValue * 1.8 + 32
     }
 }
 
@@ -185,22 +171,41 @@ class Light: NSObject {
         }
     }
     
-    func turnOnLight() {
+    func turnOnLight(lightHandler: @escaping (Bool) -> ()) {
         characteristic.writeValue(1) { (error) in
             if let error = error {
                 print("error \(error)")
+                lightHandler(false)
+            } else {
+                lightHandler(true)
             }
         }
     }
-    func turnOffLight() {
+    func turnOffLight(lightHandler: @escaping (Bool) -> ()) {
         characteristic.writeValue(0) { (error) in
             if let error = error {
                 print("error \(error)")
+                lightHandler(false)
+            } else {
+                lightHandler(true)
             }
         }
     }
-    func isOn() -> Bool {
-        enableNotifications()
-        return characteristic.value as! Bool
+    
+    func isOn(lightCheckHandler: @escaping (Bool) -> ())  {
+        characteristic.readValue(completionHandler: { (error) in
+            if let error = error {
+                print("There was an error reading the light value \(error.localizedDescription)")
+                lightCheckHandler(false)
+            } else {
+                print("successfully read the light value \(String(describing: self.characteristic.value))")
+                if let isOn = self.characteristic.value as? Bool {
+                    print("inside the light block \(isOn)")
+                    lightCheckHandler(isOn)
+                } else {
+                    lightCheckHandler(false)
+                }
+            }
+        })
     }
 }
